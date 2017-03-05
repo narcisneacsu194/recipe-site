@@ -1,7 +1,6 @@
-package dao;
+package com.company.recipes.dao;
 
 import com.company.recipes.Application;
-import com.company.recipes.dao.RecipeDao;
 import com.company.recipes.model.Recipe;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
