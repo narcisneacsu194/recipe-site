@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="layout :: head"></head>
+<body>
+
+<nav th:replace="layout :: nav"></nav>
+
+<div class="grid-container">
+
+    <div th:replace="layout :: logo"></div>
+
+    <div class="grid-100">
+
+        <div class="recipes">
+
+            <div class="grid-100 row controls">
+                <div class="grid-30">
+                    <select>
+                        <option value="">All Categories</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="dessert">Dessert</option>
+                    </select>
+                </div>
+                <div class="grid-40">
+                    <input placeholder="Search"></input>
+                </div>
+                <div class="grid-30">
+                    <div class="flush-right">
+                        <a th:href="@{/recipes/add-new-recipe}"><button>+ Add Recipe</button></a>
+                    </div>
+                </div>
+            </div> <div class="clear"></div>
+
+            <div class="grid-100 row addHover" th:each="recipe : ${recipes}">
+                <a th:href="@{|/recipes/${recipe.id}/detail|}">
+                    <div class="grid-70">
+                        <p>
+                            <span><img th:src="@{/images/favorite.svg}" height="12px"/> </span>
+                            <span th:text="${recipe.name}"></span>
+                        </p>
+                    </div>
+                </a>
+                <div class="hoverBlock">
+                    <div class="grid-30">
+                        <div class="flush-right">
+                            <p>
+                                <a th:href="@{|/recipes/${recipe.id}/edit|}"> <img th:src="@{/images/edit.svg}" height="12px"/> Edit </a>
+                                <a href="javascript:;" onclick="document.getElementById('recipeDeleteForm').submit();"> <img th:src="@{/images/delete.svg}" height="12px"/> Delete </a>
+                                <form th:action="@{|/recipes/${recipe.id}/delete|}" method="post" id="recipeDeleteForm">
+                                </form>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="clear"></div>
+
+            <div class="row">&nbsp;</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

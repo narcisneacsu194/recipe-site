@@ -35,5 +35,17 @@ public class DatabaseLoader implements ApplicationRunner{
         recipe.addIngredient(ingredient);
         recipe.addStep(step);
         recipeDao.save(recipe);
+        Recipe recipe2 = new Recipe("Name 2", "Description 2", Recipe.Category.BREAKFAST,
+                13, 15);
+        Recipe recipe3 = new Recipe("Name 3", "Description 3", Recipe.Category.BREAKFAST,
+                13, 15);
+        Recipe recipe4 = new Recipe("Name 4", "Description 4", Recipe.Category.BREAKFAST,
+                13, 15);
+        Recipe recipe5 = new Recipe("Name 5", "Description 5", Recipe.Category.BREAKFAST,
+                13, 15);
+        recipeDao.save(recipe2);
+        recipeDao.save(recipe3);
+        recipeDao.save(recipe4);
+        recipeDao.save(recipe5);
     }
 }

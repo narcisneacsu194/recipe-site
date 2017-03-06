@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-//    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 //    compile 'org.springframework:spring-orm:4.3.3.RELEASE'
 //    compile 'org.hibernate:hibernate-core:5.1.0.Final'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
