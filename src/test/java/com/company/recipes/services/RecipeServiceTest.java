@@ -27,9 +27,9 @@ public class RecipeServiceTest {
     public void findAll_ShouldReturnTwo() throws Exception{
         List<Recipe> recipes = Arrays.asList(
              new Recipe("Name 1", "Description 1", Recipe.Category.BREAKFAST,
-                     32, 23),
+                     32, 23, "http://placehold.it/350x150"),
                 new Recipe("Name 2", "Description 2", Recipe.Category.DINNER,
-                        32, 23)
+                        32, 23, "http://placehold.it/350x150")
         );
 
         when(dao.findAll()).thenReturn(recipes);
@@ -43,7 +43,7 @@ public class RecipeServiceTest {
     @Test
     public void findOne_ShouldReturnOne() throws Exception{
         when(dao.findOne(1L)).thenReturn(new Recipe("Name 1", "Description 1", Recipe.Category.BREAKFAST,
-                23, 32));
+                23, 32, "http://placehold.it/350x150"));
         assertThat(service.findOne(1L), instanceOf(Recipe.class));
         verify(dao).findOne(1L);
     }

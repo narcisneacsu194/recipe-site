@@ -40,7 +40,7 @@ public class RecipeDaoTest {
     @Test
     public void save_ShouldPersistEntity() throws Exception{
         Recipe recipe = new Recipe("Recipe 1", "Description 1",
-                Recipe.Category.BREAKFAST, 23, 32);
+                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
         dao.save(recipe);
         Assert.assertThat(dao.findOne(recipe.getId()), notNullValue(Recipe.class));
     }
@@ -49,13 +49,13 @@ public class RecipeDaoTest {
     public void save_ShouldPersistMultipleEntities() throws Exception{
         List<Recipe> recipes = new ArrayList<>();
         Recipe recipe = new Recipe("Recipe 1", "Description 1",
-                Recipe.Category.BREAKFAST, 23, 32);
+                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
         recipes.add(recipe);
         Recipe recipe2 = new Recipe("Recipe 2", "Description 2",
-                Recipe.Category.BREAKFAST, 23, 32);
+                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
         recipes.add(recipe2);
         Recipe recipe3 = new Recipe("Recipe 3", "Description 3",
-                Recipe.Category.BREAKFAST, 23, 32);
+                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
         recipes.add(recipe3);
 
         dao.save(recipes);
@@ -66,7 +66,7 @@ public class RecipeDaoTest {
     @Test
     public void delete_ShouldDeleteEntity() throws Exception{
         Recipe recipe = new Recipe("Recipe 1", "Description 1",
-                Recipe.Category.BREAKFAST, 23, 32);
+                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
         dao.save(recipe);
         Long recipeId = recipe.getId();
         dao.delete(recipe);
