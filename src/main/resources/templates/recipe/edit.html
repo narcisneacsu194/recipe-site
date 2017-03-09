@@ -13,15 +13,16 @@
     <div class="grid-100">
 
         <div class="recipes">
-
+            <form th:action="@{|/recipes/${recipe.id}/edit-recipe|}" method="post" id="saveRecipeForm" th:object="${recipe}">
+                <input type="hidden" th:field="*{id}"/>
             <div class="grid-100 row controls">
                 <div class="grid-50">
                     <h2> Recipe Editor </h2>
                 </div>
                 <div class="grid-50">
                     <div class="flush-right">
-                        <button>Save Recipe</button>
-                        <button class="secondary">Cancel</button>
+                        <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();"><button>Save Recipe</button></a>
+                        <a th:href="@{/}">Cancel</a>
                     </div>
                 </div>
             </div> <div class="clear"></div>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <input placeholder="Url"/>
+                        <input th:value="${recipe.photoUrl}" th:field="*{photoUrl}"/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -47,7 +48,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <input/>
+                        <input th:value="${recipe.name}" th:field="*{name}"/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <textarea> </textarea>
+                        <textarea th:value="${recipe.description}" th:field="*{description}"> </textarea>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -73,12 +74,10 @@
                 </div>
                 <div class="grid-30">
                     <p>
-                        <select>
-                            <option value="">All Categories</option>
-                            <option value="breakfast">Breakfast</option>
-                            <option value="lunch">Lunch</option>
-                            <option value="dinner">Dinner</option>
-                            <option value="dessert">Dessert</option>
+                        <select th:field="*{category}">
+                            <option th:each="category : ${categories}"
+                                th:value="${category}"
+                                    th:text="${category.name}"></option>
                         </select>
                     </p>
                 </div>
@@ -92,7 +91,7 @@
                 </div>
                 <div class="grid-20">
                     <p>
-                        <input/>
+                        <input th:value="${recipe.prepTime}" th:field="*{prepTime}"/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -105,7 +104,7 @@
                 </div>
                 <div class="grid-20">
                     <p>
-                        <input/>
+                        <input th:value="${recipe.cookTime}" th:field="*{cookTime}"/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -132,63 +131,31 @@
                     </p>
                 </div>
 
-                <div class="ingredient-row">
-                    <div class="prefix-20 grid-30">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                    <div class="grid-30">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                    <div class="grid-10 suffix-10">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                </div>
+                <div class="ingredient-row" th:each="ingredient : *{ingredients}">
 
-                <div class="ingredient-row">
-                    <div class="prefix-20 grid-30">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                    <div class="grid-30">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                    <div class="grid-10 suffix-10">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                </div>
+                    <input type="hidden"
+                            th:field="*{ingredients[__${ingredientStat.index}__].id}"/>
 
-                <div class="ingredient-row">
                     <div class="prefix-20 grid-30">
                         <p>
-                            <input/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].item}"/>
                         </p>
                     </div>
                     <div class="grid-30">
                         <p>
-                            <input/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].condition}"/>
                         </p>
                     </div>
                     <div class="grid-10 suffix-10">
                         <p>
-                            <input/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].quantity}"/>
                         </p>
                     </div>
                 </div>
 
                 <div class="prefix-20 grid-80 add-row">
                     <p>
-                        <button>+ Add Another Ingredient</button>
+                        <button id="add-another-ingredient-button">+ Add Another Ingredient</button>
                     </p>
                 </div>
 
@@ -206,42 +173,33 @@
                     </p>
                 </div>
 
-                <div class="step-row">
+                <div class="step-row" th:each="step : *{steps}">
+
+                    <input type="hidden" th:field="*{steps[__${stepStat.index}__].id}"/>
+
                     <div class="prefix-20 grid-80">
                         <p>
-                            <input/>
+                            <input th:field="*{steps[__${stepStat.index}__].description}"/>
                         </p>
                     </div>
                 </div>
 
-                <div class="step-row">
-                    <div class="prefix-20 grid-80">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="step-row">
-                    <div class="prefix-20 grid-80">
-                        <p>
-                            <input/>
-                        </p>
-                    </div>
-                </div>
-
+                <!---->
                 <div class="prefix-20 grid-80 add-row">
                     <p>
-                        <button>+ Add Another Step</button>
+                        <button id="add-another-step-button">+ Add Another Step</button>
                     </p>
                 </div>
 
             </div> <div class="clear"></div>
 
             <div class="row">&nbsp;</div>
-
+            </form>
         </div> <!-- recipes -->
+
     </div> <!-- grid-100 -->
+
 </div> <!-- grid-container -->
+
 </body>
 </html>
