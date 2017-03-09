@@ -47,8 +47,8 @@
                         <div class="flush-right">
                             <p>
                                 <a th:href="@{|/recipes/${recipe.id}/edit|}"> <img th:src="@{/images/edit.svg}" height="12px"/> Edit </a>
-                                <a href="javascript:;" onclick="document.getElementById('recipeDeleteForm').submit();"> <img th:src="@{/images/delete.svg}" height="12px"/> Delete </a>
                                 <form th:action="@{|/recipes/${recipe.id}/delete|}" method="post" id="recipeDeleteForm">
+                                    <button type="submit">Delete</button>
                                 </form>
                             </p>
                         </div>
