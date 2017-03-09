@@ -1,13 +1,12 @@
 package com.company.recipes.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Recipe extends BaseEntity{
+
     private String name;
     private String description;
     private Category category;
@@ -22,18 +21,19 @@ public class Recipe extends BaseEntity{
 
     private String photoUrl;
 
-    protected Recipe(){
+    public Recipe(){
         super();
     }
 
     public Recipe(String name, String description, Category category,
-                  Integer prepTime, Integer cookTime){
+                  Integer prepTime, Integer cookTime, String photoUrl){
         this();
         this.name = name;
         this.description = description;
         this.category = category;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
+        this.photoUrl = photoUrl;
         ingredients = new ArrayList<>();
         steps = new ArrayList<>();
     }
@@ -111,9 +111,19 @@ public class Recipe extends BaseEntity{
     }
 
     public static enum Category{
-        BREAKFAST,
-        LUNCH,
-        DINNER,
-        DESSERT;
+        BREAKFAST("Breakfast"),
+        LUNCH("Lunch"),
+        DINNER("Dinner"),
+        DESSERT("Dessert");
+
+        private String name;
+
+        Category(String name){
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

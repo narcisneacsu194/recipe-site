@@ -10,7 +10,7 @@ public class Step extends BaseEntity{
     @ManyToOne
     private Recipe recipe;
 
-    protected Step(){
+    public Step(){
         super();
     }
 

@@ -12,7 +12,7 @@ public class Ingredient extends BaseEntity{
     @ManyToOne
     private Recipe recipe;
 
-    protected Ingredient(){
+    public Ingredient(){
         super();
     }
 
