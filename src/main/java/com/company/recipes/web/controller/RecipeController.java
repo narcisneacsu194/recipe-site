@@ -42,24 +42,19 @@ public class RecipeController {
         model.addAttribute("ingredients", recipe.getIngredients());
         model.addAttribute("steps", recipe.getSteps());
         model.addAttribute("categories", Recipe.Category.values());
+        model.addAttribute("action", "recipes/edit-recipe");
         return "recipe/edit";
     }
 
-    @RequestMapping(value = "/recipes/{recipeId}/edit-recipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/recipes/edit-recipe", method = RequestMethod.POST)
     public String editRecipe(Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes){
 
         if(recipe.getIngredients() != null){
-            recipe.getIngredients().forEach(ingredient -> {
-                ingredient.setRecipe(recipe);
-                ingredientService.save(ingredient);
-            });
+            recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
         }
 
         if(recipe.getSteps() != null){
-            recipe.getSteps().forEach(step -> {
-                step.setRecipe(recipe);
-                stepService.save(step);
-            });
+            recipe.getSteps().forEach(step -> step.setRecipe(recipe));
         }
 
         recipeService.save(recipe);
@@ -75,9 +70,33 @@ public class RecipeController {
         return "recipe/detail";
     }
 
-    @RequestMapping(value = "/recipes/add-new-recipe")
-    public String addRecipe(){
+    @RequestMapping(value = "/recipes/add")
+    public String addRecipeForm(Model model){
+        model.addAttribute("recipe", new Recipe());
+        model.addAttribute("categories", Recipe.Category.values());
+        model.addAttribute("action", "recipes/add-recipe");
         return "recipe/edit";
+    }
+
+    @RequestMapping(value = "/recipes/add-recipe", method = RequestMethod.POST)
+    public String addRecipe(Recipe recipe, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+        recipeService.save(recipe);
+
+        if(recipe.getIngredients() != null){
+            recipe.getIngredients().forEach(ingredient -> {
+                ingredient.setRecipe(recipe);
+                ingredientService.save(ingredient);
+            });
+        }
+
+        if(recipe.getSteps() != null){
+            recipe.getSteps().forEach(step -> {
+               step.setRecipe(recipe);
+               stepService.save(step);
+            });
+        }
+
+        return String.format("redirect:/recipes/%s/detail", recipe.getId());
     }
 
     @RequestMapping(value = "/recipes/{recipeId}/delete", method = RequestMethod.POST)

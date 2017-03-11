@@ -13,7 +13,7 @@
     <div class="grid-100">
 
         <div class="recipes">
-            <form th:action="@{|/recipes/${recipe.id}/edit-recipe|}" method="post" id="saveRecipeForm" th:object="${recipe}">
+            <form th:action="@{|/${action}|}" method="post" id="saveRecipeForm" th:object="${recipe}">
                 <input type="hidden" th:field="*{id}"/>
             <div class="grid-100 row controls">
                 <div class="grid-50">
@@ -131,7 +131,25 @@
                     </p>
                 </div>
 
-                <div class="ingredient-row" th:each="ingredient : *{ingredients}">
+                <div class="ingredient-row" th:if="*{ingredients == null}">
+                    <div class="prefix-20 grid-30">
+                        <p>
+                            <input id="ingredients0.item" name="ingredients[0].item" placeholder="item..."/>
+                        </p>
+                    </div>
+                    <div class="grid-30">
+                        <p>
+                            <input id="ingredients0.condition" name="ingredients[0].condition" placeholder="condition..."/>
+                        </p>
+                    </div>
+                    <div class="grid-10 suffix-10">
+                        <p>
+                            <input id="ingredients0.quantity" name="ingredients[0].quantity"/>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="ingredient-row" th:each="ingredient : *{ingredients}" th:if="*{ingredients.size() > 0}">
 
                     <input type="hidden"
                             th:field="*{ingredients[__${ingredientStat.index}__].id}"/>
@@ -173,7 +191,15 @@
                     </p>
                 </div>
 
-                <div class="step-row" th:each="step : *{steps}">
+                <div class="step-row" th:if="*{steps == null}">
+                    <div class="prefix-20 grid-80">
+                        <p>
+                            <input id="steps0.description" name="steps[0].description" placeholder="new step"/>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-row" th:each="step : *{steps}" th:if="*{steps.size() > 0}">
 
                     <input type="hidden" th:field="*{steps[__${stepStat.index}__].id}"/>
 
