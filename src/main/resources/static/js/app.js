@@ -172,68 +172,73 @@ function changeIngredientInputElement(
 
 // function adding new ingredient
 $("#add-another-ingredient-button").click(function () {
-    // can add prevent default so that
-    // no need to write button type=button
-    // in html5
-    event.preventDefault();
+     // can add prevent default so that
+        // no need to write button type=button
+        // in html5
+        event.preventDefault();
 
-    // remove errors
-    $('div .ingredient-error').remove();
+        // define <div> with step that we will be appending to
+        var divWithLastStep = $(".ingredient-row").last();
 
-    // define <div> with ingredient that we will be appending to
-    var divWithLastIngredient = $(".ingredient-row").last();
+        // get id of the last step to generate new one
+        // it is kind of whacky .. but well I'm JS newbie, so
+        var id = parseInt(
+            divWithLastStep
+                .children('div')
+                .children('p')
+                .children('input')
+                .attr('id')
+                .split('.')[0]
+                .split('ingredients')[1]
+        );
 
-    // get id as String of the last step to generate new one
-    // it is kind of wacky .. but well I'm JS newbie, so
-    var idAsString =
-        divWithLastIngredient
-        .children('div').first()
-        .children('p')
-        .children()
-        .attr('id')
-        .split('.')[0]
-        .split('ingredients')[1];
+        // TODO: add Nan check here
 
-    // if id is not a number we set id to zero
-    // otherwise we parse it
-    var id = 0;
-    if (!isNaN(idAsString)) {
-        id = parseInt(idAsString);
-    }
+        // set new id
+        var newId = id + 1;
+        var newHiddenInputId = 'ingredients' + newId + '.id';
+        var newHiddenInputName = 'ingredients[' + newId + '].id';
 
-    // set new id
-    var newIngredientId = id + 1;
+        var newIngredientItemInputIdField = 'ingredients' + newId + '.item';
+        var newIngredientItemInputNameField = 'ingredients[' + newId + '].item';
 
-    // clone div and add new one
-    var cloneOfTheLastDivWithIngredientRow =
-        divWithLastIngredient.clone();
+        var newIngredientConditionInputIdField = 'ingredients' + newId + '.condition';
+        var newIngredientConditionInputNameField = 'ingredients[' + newId + '].condition';
 
-    // add clone to the end
-    divWithLastIngredient.after(
-        cloneOfTheLastDivWithIngredientRow
-    );
+        var newIngredientQuantityInputIdField = 'ingredients' + newId + '.quantity';
+        var newIngredientQuantityInputNameField = 'ingredients[' + newId + '].quantity';
 
-    // change ingredient.item select
-    changeSelectItemElement(
-        cloneOfTheLastDivWithIngredientRow,
-        newIngredientId
-    );
+        // create new div
+        var newDiv =
+            "<div class='step-row'>" +
+                "<input type='hidden' id='" + newHiddenInputId + "' name='" +
+                    newHiddenInputName + "'>" +
+                "<div class='prefix-20 grid-30'>" +
+                    "<p>" +
+                        "<input id='" + newIngredientItemInputIdField + "' " +
+                        "name='" + newIngredientItemInputNameField + "' " +
+                        "placeholder='item...'>" +
+                    "</p>" +
+                "</div>" +
+                "<div class='grid-30'>" +
+                    "<p>" +
+                        "<input id='" + newIngredientConditionInputIdField + "'" +
+                        "name='" + newIngredientConditionInputNameField  + "'" +
+                        "placeholder='condition...'>" +
+                    "</p>" +
+                "</div>" +
+                "<div class='grid-10 suffix-10'>" +
+                    "<p>" +
+                        "<input id='" + newIngredientQuantityInputIdField + "'" +
+                        "name='" + newIngredientQuantityInputNameField  + "'>" +
+                    "</p>" +
+                "</div>"
+            "</div>";
 
-    // change ingredient.quantity
-    changeIngredientInputElement(
-        cloneOfTheLastDivWithIngredientRow,
-        newIngredientId,
-        1,
-        'quantity'
-    );
-
-    // change ingredient.condition
-    changeIngredientInputElement(
-        cloneOfTheLastDivWithIngredientRow,
-        newIngredientId,
-        2,
-        'condition'
-    );
+        // add newly created div after last one
+        divWithLastStep.after(
+            newDiv
+        );
 
 });
 
