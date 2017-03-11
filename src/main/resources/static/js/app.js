@@ -69,7 +69,7 @@ $("#add-another-step-button").click(function () {
                 "<p>" +
                     "<input id='" + newStepInputId + "' " +
                     "name='" + newStepInputName + "' " +
-                    "placeholder='new step'>" +
+                    "placeholder='description...'>" +
                 "</p>" +
             "</div>" +
         "</div>";
@@ -222,15 +222,16 @@ $("#add-another-ingredient-button").click(function () {
                 "</div>" +
                 "<div class='grid-30'>" +
                     "<p>" +
-                        "<input id='" + newIngredientConditionInputIdField + "'" +
-                        "name='" + newIngredientConditionInputNameField  + "'" +
+                        "<input id='" + newIngredientConditionInputIdField + "' " +
+                        "name='" + newIngredientConditionInputNameField  + "' " +
                         "placeholder='condition...'>" +
                     "</p>" +
                 "</div>" +
                 "<div class='grid-10 suffix-10'>" +
                     "<p>" +
-                        "<input id='" + newIngredientQuantityInputIdField + "'" +
-                        "name='" + newIngredientQuantityInputNameField  + "'>" +
+                        "<input id='" + newIngredientQuantityInputIdField + "' " +
+                        "name='" + newIngredientQuantityInputNameField  + "' " +
+                        "placeholder='...'>" +
                     "</p>" +
                 "</div>"
             "</div>";

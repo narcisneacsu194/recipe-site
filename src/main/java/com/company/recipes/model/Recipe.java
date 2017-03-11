@@ -1,21 +1,38 @@
 package com.company.recipes.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Recipe extends BaseEntity{
 
+    @NotNull
+    @Size(min = 2, max = 50)
     private String name;
+
     private String description;
+
+    @NotNull
     private Category category;
+
+    @NotNull
+    @Min(value = 1)
     private Integer prepTime;
+
+    @NotNull
+    @Min(value = 1)
     private Integer cookTime;
 
+    @Valid
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
 
+    @Valid
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps;
 

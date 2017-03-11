@@ -6,6 +6,7 @@ import com.company.recipes.model.Step;
 import com.company.recipes.services.IngredientService;
 import com.company.recipes.services.RecipeService;
 import com.company.recipes.services.StepService;
+import com.company.recipes.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -47,7 +49,12 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipes/edit-recipe", method = RequestMethod.POST)
-    public String editRecipe(Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes){
+    public String editRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("flash",
+                    new FlashMessage("One or more fields have invalid input. Please try again!", FlashMessage.Status.FAILURE));
+            return String.format("redirect:/recipes/%s/edit", recipe.getId());
+        }
 
         if(recipe.getIngredients() != null){
             recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
@@ -58,6 +65,8 @@ public class RecipeController {
         }
 
         recipeService.save(recipe);
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("The recipe has been modified successfully!", FlashMessage.Status.SUCCESS));
         return String.format("redirect:/recipes/%s/detail", recipe.getId());
     }
 
@@ -72,14 +81,22 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipes/add")
     public String addRecipeForm(Model model){
-        model.addAttribute("recipe", new Recipe());
+        if(!model.containsAttribute("recipe")) {
+            model.addAttribute("recipe", new Recipe());
+        }
         model.addAttribute("categories", Recipe.Category.values());
         model.addAttribute("action", "recipes/add-recipe");
         return "recipe/edit";
     }
 
     @RequestMapping(value = "/recipes/add-recipe", method = RequestMethod.POST)
-    public String addRecipe(Recipe recipe, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+    public String addRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("flash",
+                    new FlashMessage("One or more fields have invalid input. Please try again!", FlashMessage.Status.FAILURE));
+            redirectAttributes.addFlashAttribute("recipe", recipe);
+            return "redirect:/recipes/add";
+        }
         recipeService.save(recipe);
 
         if(recipe.getIngredients() != null){
@@ -96,6 +113,8 @@ public class RecipeController {
             });
         }
 
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("The recipe has been added successfully!", FlashMessage.Status.SUCCESS));
         return String.format("redirect:/recipes/%s/detail", recipe.getId());
     }
 
@@ -103,6 +122,8 @@ public class RecipeController {
     public String deleteRecipe(@PathVariable Long recipeId, RedirectAttributes redirectAttributes){
         Recipe recipe = recipeService.findOne(recipeId);
         recipeService.delete(recipe);
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("The recipe has been deleted successfully!", FlashMessage.Status.SUCCESS));
         return "redirect:/";
     }
 }
