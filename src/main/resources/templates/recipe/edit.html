@@ -13,7 +13,7 @@
     <div class="grid-100">
 
         <div class="recipes">
-            <form th:action="@{|/recipes/${recipe.id}/edit-recipe|}" method="post" id="saveRecipeForm" th:object="${recipe}">
+            <form th:action="@{|/${action}|}" method="post" id="saveRecipeForm" th:object="${recipe}">
                 <input type="hidden" th:field="*{id}"/>
             <div class="grid-100 row controls">
                 <div class="grid-50">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <input th:value="${recipe.photoUrl}" th:field="*{photoUrl}"/>
+                        <input th:value="${recipe.photoUrl}" th:field="*{photoUrl}" placeholder="url..."/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <input th:value="${recipe.name}" th:field="*{name}"/>
+                        <input th:value="${recipe.name}" th:field="*{name}" placeholder="name..."/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <textarea th:value="${recipe.description}" th:field="*{description}"> </textarea>
+                        <textarea th:value="${recipe.description}" th:field="*{description}" placeholder="description..."> </textarea>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -75,6 +75,7 @@
                 <div class="grid-30">
                     <p>
                         <select th:field="*{category}">
+                            <option value="">All Categories</option>
                             <option th:each="category : ${categories}"
                                 th:value="${category}"
                                     th:text="${category.name}"></option>
@@ -91,7 +92,7 @@
                 </div>
                 <div class="grid-20">
                     <p>
-                        <input th:value="${recipe.prepTime}" th:field="*{prepTime}"/>
+                        <input th:value="${recipe.prepTime}" th:field="*{prepTime}" placeholder="prep time..."/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -104,7 +105,7 @@
                 </div>
                 <div class="grid-20">
                     <p>
-                        <input th:value="${recipe.cookTime}" th:field="*{cookTime}"/>
+                        <input th:value="${recipe.cookTime}" th:field="*{cookTime}" placeholder="cook time..."/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -131,24 +132,42 @@
                     </p>
                 </div>
 
-                <div class="ingredient-row" th:each="ingredient : *{ingredients}">
+                <div class="ingredient-row" th:if="*{ingredients == null}">
+                    <div class="prefix-20 grid-30">
+                        <p>
+                            <input id="ingredients0.item" name="ingredients[0].item" placeholder="item..."/>
+                        </p>
+                    </div>
+                    <div class="grid-30">
+                        <p>
+                            <input id="ingredients0.condition" name="ingredients[0].condition" placeholder="condition..."/>
+                        </p>
+                    </div>
+                    <div class="grid-10 suffix-10">
+                        <p>
+                            <input id="ingredients0.quantity" name="ingredients[0].quantity" placeholder="..."/>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="ingredient-row" th:each="ingredient : *{ingredients}" th:if="*{ingredients.size() > 0}">
 
                     <input type="hidden"
                             th:field="*{ingredients[__${ingredientStat.index}__].id}"/>
 
                     <div class="prefix-20 grid-30">
                         <p>
-                            <input th:field="*{ingredients[__${ingredientStat.index}__].item}"/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].item}" placeholder="item..."/>
                         </p>
                     </div>
                     <div class="grid-30">
                         <p>
-                            <input th:field="*{ingredients[__${ingredientStat.index}__].condition}"/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].condition}" placeholder="condition..."/>
                         </p>
                     </div>
                     <div class="grid-10 suffix-10">
                         <p>
-                            <input th:field="*{ingredients[__${ingredientStat.index}__].quantity}"/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].quantity}" placeholder="..."/>
                         </p>
                     </div>
                 </div>
@@ -173,13 +192,21 @@
                     </p>
                 </div>
 
-                <div class="step-row" th:each="step : *{steps}">
+                <div class="step-row" th:if="*{steps == null}">
+                    <div class="prefix-20 grid-80">
+                        <p>
+                            <input id="steps0.description" name="steps[0].description" placeholder="description..."/>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-row" th:each="step : *{steps}" th:if="*{steps.size() > 0}">
 
                     <input type="hidden" th:field="*{steps[__${stepStat.index}__].id}"/>
 
                     <div class="prefix-20 grid-80">
                         <p>
-                            <input th:field="*{steps[__${stepStat.index}__].description}"/>
+                            <input th:field="*{steps[__${stepStat.index}__].description}" placeholder="description..."/>
                         </p>
                     </div>
                 </div>
@@ -200,6 +227,9 @@
     </div> <!-- grid-100 -->
 
 </div> <!-- grid-container -->
+<div th:replace="layout :: flash">
 
+</div>
+<div th:replace="layout :: scripts"></div>
 </body>
 </html>

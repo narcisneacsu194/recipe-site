@@ -2,9 +2,14 @@ package com.company.recipes.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Step extends BaseEntity{
+
+    @NotNull
+    @Size(min = 2, max = 1000)
     private String description;
 
     @ManyToOne
