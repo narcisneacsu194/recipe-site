@@ -14,4 +14,10 @@ public interface RecipeDao extends CrudRepository<Recipe, Long>{
     List<Recipe> findAll();
 
     Recipe findOne(@Param("id") Long id);
+
+    @Query("select r from Recipe r where r.description like %?1%")
+    List<Recipe> findByDescriptionContaining(String descriptionChunk);
+
+    @Query("select r from Recipe r where r.category = ?1")
+    List<Recipe> findByCategory(Recipe.Category category);
 }

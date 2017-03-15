@@ -37,4 +37,14 @@ public class RecipeServiceImpl implements RecipeService{
     public void delete(Recipe recipe) {
         recipeDao.delete(recipe);
     }
+
+    @Override
+    public List<Recipe> findByDescriptionContaining(String descriptionChunk){
+        return recipeDao.findByDescriptionContaining(descriptionChunk);
+    }
+
+    @Override
+    public List<Recipe> findByCategory(String categoryName) {
+        return recipeDao.findByCategory(Recipe.Category.valueOf(categoryName.toUpperCase()));
+    }
 }

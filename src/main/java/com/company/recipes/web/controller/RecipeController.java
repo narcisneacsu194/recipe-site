@@ -1,8 +1,6 @@
 package com.company.recipes.web.controller;
 
-import com.company.recipes.model.Ingredient;
 import com.company.recipes.model.Recipe;
-import com.company.recipes.model.Step;
 import com.company.recipes.services.IngredientService;
 import com.company.recipes.services.RecipeService;
 import com.company.recipes.services.StepService;
@@ -14,9 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,8 +32,17 @@ public class RecipeController {
 
     @RequestMapping(value = {"/", "/recipes"})
     public String listRecipes(Model model){
-        List<Recipe> recipes = recipeService.findAll();
-        model.addAttribute("recipes", recipes);
+        List<Recipe> recipes;
+        if(!model.containsAttribute("recipes")){
+            recipes = recipeService.findAll();
+            model.addAttribute("recipes", recipes);
+        }
+
+        if(!model.containsAttribute("recipe")){
+            model.addAttribute("recipe", new Recipe());
+        }
+
+        model.addAttribute("categories", Recipe.Category.values());
         return "recipe/index";
     }
 
@@ -124,6 +133,25 @@ public class RecipeController {
         recipeService.delete(recipe);
         redirectAttributes.addFlashAttribute("flash",
                 new FlashMessage("The recipe has been deleted successfully!", FlashMessage.Status.SUCCESS));
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/search-by-description-containing", method = RequestMethod.GET)
+    public String searchByDescriptionContaining(Recipe recipe, Model model, RedirectAttributes redirectAttributes){
+        List<Recipe> recipes = recipeService.findByDescriptionContaining(recipe.getDescription());
+        redirectAttributes.addFlashAttribute("recipes", recipes);
+        redirectAttributes.addFlashAttribute("description", recipe.getDescription());
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/search-by-category", method = RequestMethod.GET)
+    public String searchByCategory(Recipe recipe, Model model, RedirectAttributes redirectAttributes){
+        List<Recipe> recipes = new ArrayList<>();
+        if(recipe.getCategory() != null){
+            recipes = recipeService.findByCategory(recipe.getCategory().getName());
+        }
+        redirectAttributes.addFlashAttribute("recipes", recipes);
+        redirectAttributes.addFlashAttribute("recipe", recipe);
         return "redirect:/";
     }
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface RecipeService {
     List<Recipe> findAll();
+    List<Recipe> findByDescriptionContaining(String descriptionChunk);
+    List<Recipe> findByCategory(String categoryName);
     Recipe findOne(Long id);
     void save(Recipe recipe);
     void save(List<Recipe> recipes);

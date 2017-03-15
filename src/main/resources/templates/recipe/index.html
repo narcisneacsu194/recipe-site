@@ -15,16 +15,27 @@
 
             <div class="grid-100 row controls">
                 <div class="grid-30">
-                    <select>
-                        <option value="">All Categories</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="dessert">Dessert</option>
-                    </select>
+                    <form th:action="@{/search-by-category}" method="get" th:object="${recipe}">
+                        <select th:field="*{category}">
+                            <option value="">All Categories</option>
+                            <option value="otherValue">Other Value</option>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category}"
+                                    th:text="${category.name}"></option>
+                        </select>
+                        <button>Search</button>
+                    </form>
                 </div>
                 <div class="grid-40">
-                    <input placeholder="Search"></input>
+                    <form th:action="@{/search-by-description-containing}" method="get" th:object="${recipe}">
+                        <input th:field="*{description}" th:placeholder="${description}" th:if="${description != null and #strings.length(description) > 0}"/>
+                        <input th:field="*{description}" placeholder="Search recipes by description..." th:if="${description == null or #strings.length(description) == 0}" />
+                        <button>Search</button>
+                    </form>
+                    <!--<form th:action="@{/search-by-description-containing}" method="get">-->
+                        <!--<input placeholder="Search recipes by description..." name="searchQuery"/>-->
+                        <!--<button>Search</button>-->
+                    <!--</form>-->
                 </div>
                 <div class="grid-30">
                     <div class="flush-right">
