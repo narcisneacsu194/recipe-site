@@ -39,10 +39,12 @@ public class RecipeController {
     private UserService userService;
 
     @RequestMapping(value = {"/", "/recipes"})
-    public String listRecipes(Model model){
+    public String listRecipes(Model model, Principal principal){
         List<Recipe> recipes;
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         if(!model.containsAttribute("recipes")){
             recipes = recipeService.findAll();
+
             model.addAttribute("recipes", recipes);
         }
 
@@ -51,6 +53,7 @@ public class RecipeController {
         }
 
         model.addAttribute("categories", Recipe.Category.values());
+        model.addAttribute("username", user.getUsername());
         return "recipe/index";
     }
 
@@ -181,7 +184,7 @@ public class RecipeController {
 
         if(!user2.getFavoritedRecipes().contains(recipe)){
             user2.addFavoritedRecipe(recipe);
-            recipe.addFavoriteUser(user2);
+//            recipe.addFavoriteUser(user2);
             userService.save(user2);
         }else{
             user2.removeFavoritedRecipe(recipe);
