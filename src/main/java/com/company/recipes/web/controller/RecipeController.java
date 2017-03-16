@@ -184,7 +184,6 @@ public class RecipeController {
 
         if(!user2.getFavoritedRecipes().contains(recipe)){
             user2.addFavoritedRecipe(recipe);
-//            recipe.addFavoriteUser(user2);
             userService.save(user2);
         }else{
             user2.removeFavoritedRecipe(recipe);
