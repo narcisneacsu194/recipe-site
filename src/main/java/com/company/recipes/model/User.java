@@ -38,7 +38,10 @@ public class User implements UserDetails{
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @ManyToMany(mappedBy = "favoriteUsers")
+    @ManyToMany(targetEntity = Recipe.class)
+    @JoinTable(name = "users_favorite_recipes",
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "favoritedrecipes_id")})
     private List<Recipe> favoritedRecipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

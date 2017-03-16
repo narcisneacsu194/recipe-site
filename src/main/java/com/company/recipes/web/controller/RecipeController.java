@@ -178,11 +178,10 @@ public class RecipeController {
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User user2 = userService.findByUsername(user.getUsername());
         Recipe recipe = recipeService.findOne(recipeId);
-//        List<Recipe> recipes = user.getFavoritedRecipes();
-//        List<User> users = recipe.getFavoriteUsers();
+
         if(!user2.getFavoritedRecipes().contains(recipe)){
-            user2.addFavoritedRecipe(recipe);
             recipe.addFavoriteUser(user2);
+            user2.addFavoritedRecipe(recipe);
         }else{
             user2.removeFavoritedRecipe(recipe);
             recipe.removeFavoriteUser(user2);

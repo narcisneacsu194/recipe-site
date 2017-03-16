@@ -36,10 +36,10 @@ public class Recipe extends BaseEntity{
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps;
 
-    @ManyToMany
-    @JoinTable(name = "USER_FAVORITE_RECIPES",
-        joinColumns = @JoinColumn(name="RECIPE_ID", referencedColumnName = "ID"),
-        inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"))
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "users_favorite_recipes",
+        joinColumns = {@JoinColumn(name="favoritedrecipes_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<User> favoriteUsers = new ArrayList<>();
 
     //owner
