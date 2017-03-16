@@ -3,6 +3,7 @@ package com.company.recipes.services;
 import com.company.recipes.dao.RoleDao;
 import com.company.recipes.dao.UserDao;
 import com.company.recipes.model.User;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,13 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private RoleDao roleDao;
+
+    @Override
+    public User findByUsername(String username) {
+        User user = userDao.findByUsername(username);
+        Hibernate.initialize(user.getFavoritedRecipes());
+        return user;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username)

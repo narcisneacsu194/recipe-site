@@ -5,6 +5,7 @@ import com.company.recipes.model.User;
 import com.company.recipes.services.IngredientService;
 import com.company.recipes.services.RecipeService;
 import com.company.recipes.services.StepService;
+import com.company.recipes.services.UserService;
 import com.company.recipes.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +34,9 @@ public class RecipeController {
 
     @Autowired
     private StepService stepService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = {"/", "/recipes"})
     public String listRecipes(Model model){
@@ -170,16 +174,18 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipes/{recipeId}/detail/add-to-favorites", method = RequestMethod.POST)
-    public String addToFavories(Recipe recipe, RedirectAttributes redirectAttributes, Principal principal){
+    public String addToFavories(@PathVariable Long recipeId, RedirectAttributes redirectAttributes, Principal principal){
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        User user2 = userService.findByUsername(user.getUsername());
+        Recipe recipe = recipeService.findOne(recipeId);
 //        List<Recipe> recipes = user.getFavoritedRecipes();
 //        List<User> users = recipe.getFavoriteUsers();
-        if(!user.getFavoritedRecipes().contains(recipe)){
-            user.addFavoritedRecipe(recipe);
-            recipe.addFavoriteUser(user);
+        if(!user2.getFavoritedRecipes().contains(recipe)){
+            user2.addFavoritedRecipe(recipe);
+            recipe.addFavoriteUser(user2);
         }else{
-            user.removeFavoritedRecipe(recipe);
-            recipe.removeFavoriteUser(user);
+            user2.removeFavoritedRecipe(recipe);
+            recipe.removeFavoriteUser(user2);
         }
 
         return String.format("redirect:/recipes/%s/detail", recipe.getId());

@@ -20,7 +20,7 @@
                 </div>
                 <div class="grid-50">
                     <h2 class="flush-right">
-                        <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" th:object="${recipe}" method="post">
+                        <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" method="post">
 
                         </form>
                         <a href="javascript:;" onclick="document.getElementById('favoriteForm').submit();">
