@@ -47,4 +47,9 @@ public class RecipeServiceImpl implements RecipeService{
     public List<Recipe> findByCategory(String categoryName) {
         return recipeDao.findByCategory(Recipe.Category.valueOf(categoryName.toUpperCase()));
     }
+
+    @Override
+    public List<Recipe> findAllFromSpecificUser() {
+        return recipeDao.findAllFromSpecificUser();
+    }
 }

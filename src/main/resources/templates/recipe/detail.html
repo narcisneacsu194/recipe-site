@@ -20,8 +20,12 @@
                 </div>
                 <div class="grid-50">
                     <h2 class="flush-right">
-                        <a href="#">
-                            <img th:src="@{/images/favorite.svg}" height="16px"/>
+                        <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" th:object="${recipe}" method="post">
+
+                        </form>
+                        <a href="javascript:;" onclick="document.getElementById('favoriteForm').submit();">
+                            <img th:src="@{/images/favorite.svg}" height="16px" th:if="${favoredByUser == false}"/>
+                            <img th:src="@{/images/favorited.svg}" height="16px" th:if="${favoredByUser}"/>
                         </a>
                     </h2>
                 </div>

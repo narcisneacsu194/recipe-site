@@ -1,11 +1,13 @@
 package com.company.recipes.web.controller;
 
 import com.company.recipes.model.Recipe;
+import com.company.recipes.model.User;
 import com.company.recipes.services.IngredientService;
 import com.company.recipes.services.RecipeService;
 import com.company.recipes.services.StepService;
 import com.company.recipes.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -82,6 +86,11 @@ public class RecipeController {
     @RequestMapping(value = "/recipes/{recipeId}/detail")
     public String recipeDetails(@PathVariable Long recipeId, Model model){
         Recipe recipe = recipeService.findOne(recipeId);
+        if(!recipe.getFavoriteUsers().contains(recipe.getUser())){
+            model.addAttribute("favoredByUser", false);
+        }else{
+            model.addAttribute("favoredByUser", true);
+        }
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredients", recipe.getIngredients());
         model.addAttribute("steps", recipe.getSteps());
@@ -99,13 +108,18 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipes/add-recipe", method = RequestMethod.POST)
-    public String addRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes){
+    public String addRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes,
+                            Principal principal){
         if(result.hasErrors()){
             redirectAttributes.addFlashAttribute("flash",
                     new FlashMessage("One or more fields have invalid input. Please try again!", FlashMessage.Status.FAILURE));
             redirectAttributes.addFlashAttribute("recipe", recipe);
             return "redirect:/recipes/add";
         }
+
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        recipe.setUser(user);
+
         recipeService.save(recipe);
 
         if(recipe.getIngredients() != null){
@@ -153,5 +167,21 @@ public class RecipeController {
         redirectAttributes.addFlashAttribute("recipes", recipes);
         redirectAttributes.addFlashAttribute("recipe", recipe);
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/recipes/{recipeId}/detail/add-to-favorites", method = RequestMethod.POST)
+    public String addToFavories(Recipe recipe, RedirectAttributes redirectAttributes, Principal principal){
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+//        List<Recipe> recipes = user.getFavoritedRecipes();
+//        List<User> users = recipe.getFavoriteUsers();
+        if(!user.getFavoritedRecipes().contains(recipe)){
+            user.addFavoritedRecipe(recipe);
+            recipe.addFavoriteUser(user);
+        }else{
+            user.removeFavoritedRecipe(recipe);
+            recipe.removeFavoriteUser(user);
+        }
+
+        return String.format("redirect:/recipes/%s/detail", recipe.getId());
     }
 }

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="layout :: head"></head>
+
+<body>
+
+<nav th:replace="layout :: nav"></nav>
+
+<div class="grid-container">
+
+    <div th:replace="layout :: logo"></div>
+
+    <div class="grid-100">
+
+        <div class="recipes">
+
+            <div class="grid-100 row controls">
+                <div class="grid-100">
+                    <h2 sec:authentication="name"> Chandra S. </h2>
+                </div>
+            </div> <div class="clear"></div>
+
+            <div th:replace="layout :: recipe-list"></div>
+
+            <div class="clear"></div>
+
+            <div class="row">&nbsp;</div>
+
+        </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+</div> <!-- grid-container -->
+</body>
+</html>

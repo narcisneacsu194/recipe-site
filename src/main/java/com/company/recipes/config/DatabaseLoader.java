@@ -1,11 +1,7 @@
 package com.company.recipes.config;
 
-import com.company.recipes.dao.IngredientDao;
-import com.company.recipes.dao.RecipeDao;
-import com.company.recipes.dao.StepDao;
-import com.company.recipes.model.Ingredient;
-import com.company.recipes.model.Recipe;
-import com.company.recipes.model.Step;
+import com.company.recipes.dao.*;
+import com.company.recipes.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,19 +14,27 @@ import java.util.stream.IntStream;
 public class DatabaseLoader implements ApplicationRunner{
 
     private RecipeDao recipeDao;
-    private IngredientDao ingredientDao;
-    private StepDao stepDao;
+    private UserDao userDao;
+    private RoleDao roleDao;
 
     @Autowired
-    public DatabaseLoader(RecipeDao recipeDao, IngredientDao ingredientDao,
-                          StepDao stepDao){
+    public DatabaseLoader(RecipeDao recipeDao, UserDao userDao, RoleDao roleDao){
         this.recipeDao = recipeDao;
-        this.ingredientDao = ingredientDao;
-        this.stepDao = stepDao;
+        this.userDao = userDao;
+        this.roleDao = roleDao;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        Role role = new Role("ROLE_USER");
+        roleDao.save(role);
+        User user = new User("user", true, "password");
+        user.setRole(role);
+        User user2 = new User("user2", true, "password");
+        user2.setRole(role);
+        userDao.save(user);
+        userDao.save(user2);
 
         IntStream.range(1, 100).forEach(value -> {
             Recipe.Category recipeCategory = Recipe.Category.BREAKFAST;
@@ -61,6 +65,15 @@ public class DatabaseLoader implements ApplicationRunner{
                 recipe.addStep(step);
                 ingredient.setRecipe(recipe);
                 step.setRecipe(recipe);
+
+                if(value < 50){
+                    user.addOwnedRecipe(recipe);
+                    recipe.setUser(user);
+                }else{
+                    user2.addOwnedRecipe(recipe);
+                    recipe.setUser(user2);
+                }
+
                 recipeDao.save(recipe);
             });
 

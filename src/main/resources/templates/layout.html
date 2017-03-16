@@ -12,13 +12,13 @@
     </head>
     <body>
     <nav th:fragment="nav">
-        <a href="profile.html">
+        <a th:href="@{|/user/profile|}" sec:authentication="name">
             Chandra S.
         </a>
         &bull;
-        <a href="login.html">
-            logout
-        </a>
+        <a href="javascript:;" onclick="document.getElementById('logoutForm').submit();">logout</a>
+        <form th:action="@{/logout}" method="post" id="logoutForm">
+        </form>
     </nav>
 
     <div class="grid-container">
@@ -42,5 +42,29 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script th:src="@{/js/app.js}"></script>
     </div>
+
+    <div class="grid-100 row addHover" th:each="recipe : ${recipes}" th:fragment="recipe-list">
+        <a th:href="@{|/recipes/${recipe.id}/detail|}">
+            <div class="grid-70">
+                <p>
+                    <span><img th:src="@{/images/favorite.svg}" height="12px"/> </span>
+                    <span th:text="${recipe.name}"></span>
+                </p>
+            </div>
+        </a>
+        <div class="hoverBlock">
+            <div class="grid-30">
+                <div class="flush-right">
+                    <p>
+                        <a th:href="@{|/recipes/${recipe.id}/edit|}"> <img th:src="@{/images/edit.svg}" height="12px"/> Edit </a>
+                    <form th:action="@{|/recipes/${recipe.id}/delete|}" method="post" id="recipeDeleteForm">
+                        <button type="submit">Delete</button>
+                    </form>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </body>
 </html>

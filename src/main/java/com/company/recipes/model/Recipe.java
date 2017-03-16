@@ -36,6 +36,17 @@ public class Recipe extends BaseEntity{
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps;
 
+    @ManyToMany
+    @JoinTable(name = "USER_FAVORITE_RECIPES",
+        joinColumns = @JoinColumn(name="RECIPE_ID", referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"))
+    private List<User> favoriteUsers = new ArrayList<>();
+
+    //owner
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String photoUrl;
 
     public Recipe(){
@@ -125,6 +136,30 @@ public class Recipe extends BaseEntity{
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public List<User> getFavoriteUsers() {
+        return favoriteUsers;
+    }
+
+    public void setFavoriteUsers(List<User> favoriteUsers) {
+        this.favoriteUsers = favoriteUsers;
+    }
+
+    public void addFavoriteUser(User user){
+        favoriteUsers.add(user);
+    }
+
+    public void removeFavoriteUser(User user){
+        favoriteUsers.remove(user);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public static enum Category{

@@ -13,6 +13,9 @@ public interface RecipeDao extends CrudRepository<Recipe, Long>{
     @Query("select r from Recipe r")
     List<Recipe> findAll();
 
+    @Query("select r from Recipe r where r.user.id=:#{principal.id}")
+    List<Recipe> findAllFromSpecificUser();
+
     Recipe findOne(@Param("id") Long id);
 
     @Query("select r from Recipe r where r.description like %?1%")
