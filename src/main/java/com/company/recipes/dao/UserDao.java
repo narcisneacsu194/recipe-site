@@ -12,4 +12,5 @@ public interface UserDao extends CrudRepository<User, Long>{
 
 //    @Query("select u from User u join fetch u.favo")
 //    User findByIdAndFetchRecipesEagerly(@Param("id") Long id);
+
 }

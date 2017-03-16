@@ -40,8 +40,8 @@ public class User implements UserDetails{
 
     @ManyToMany(targetEntity = Recipe.class)
     @JoinTable(name = "users_favorite_recipes",
-            joinColumns = {@JoinColumn(name="user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "favoritedrecipes_id")})
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recipe_id"))
     private List<Recipe> favoritedRecipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void save(User user) {
+        userDao.save(user);
+    }
+
+    @Override
     public User registerNewUser(String username, boolean enabled, String password) {
         return userDao.save(new User(username, enabled, password));
     }

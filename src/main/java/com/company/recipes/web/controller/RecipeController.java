@@ -180,11 +180,13 @@ public class RecipeController {
         Recipe recipe = recipeService.findOne(recipeId);
 
         if(!user2.getFavoritedRecipes().contains(recipe)){
-            recipe.addFavoriteUser(user2);
             user2.addFavoritedRecipe(recipe);
+            recipe.addFavoriteUser(user2);
+            userService.save(user2);
         }else{
             user2.removeFavoritedRecipe(recipe);
             recipe.removeFavoriteUser(user2);
+            userService.save(user2);
         }
 
         return String.format("redirect:/recipes/%s/detail", recipe.getId());

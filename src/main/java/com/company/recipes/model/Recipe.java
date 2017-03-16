@@ -38,8 +38,8 @@ public class Recipe extends BaseEntity{
 
     @ManyToMany(targetEntity = User.class)
     @JoinTable(name = "users_favorite_recipes",
-        joinColumns = {@JoinColumn(name="favoritedrecipes_id")},
-        inverseJoinColumns = {@JoinColumn(name = "user_id")})
+        joinColumns = @JoinColumn(name="recipe_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> favoriteUsers = new ArrayList<>();
 
     //owner
