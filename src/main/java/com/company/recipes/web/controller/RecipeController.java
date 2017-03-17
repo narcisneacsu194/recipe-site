@@ -42,8 +42,11 @@ public class RecipeController {
     public String listRecipes(Model model, Principal principal){
         List<Recipe> recipes;
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        User actualUser = userService.findByUsername(user.getUsername());
         if(!model.containsAttribute("recipes")){
             recipes = recipeService.findAll();
+            model.addAttribute("nullAndNonNullUserFavoriteRecipeList",
+                    nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
 
             model.addAttribute("recipes", recipes);
         }
@@ -91,9 +94,11 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipes/{recipeId}/detail")
-    public String recipeDetails(@PathVariable Long recipeId, Model model){
+    public String recipeDetails(@PathVariable Long recipeId, Model model, Principal principal){
         Recipe recipe = recipeService.findOne(recipeId);
-        if(!recipe.getFavoriteUsers().contains(recipe.getUser())){
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        User actualUser = userService.findByUsername(user.getUsername());
+        if(!recipe.getFavoriteUsers().contains(actualUser)){
             model.addAttribute("favoredByUser", false);
         }else{
             model.addAttribute("favoredByUser", true);
@@ -158,18 +163,26 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/search-by-description-containing", method = RequestMethod.GET)
-    public String searchByDescriptionContaining(Recipe recipe, Model model, RedirectAttributes redirectAttributes){
+    public String searchByDescriptionContaining(Recipe recipe, Model model, RedirectAttributes redirectAttributes, Principal principal){
         List<Recipe> recipes = recipeService.findByDescriptionContaining(recipe.getDescription());
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        User actualUser = userService.findByUsername(user.getUsername());
         redirectAttributes.addFlashAttribute("recipes", recipes);
+        redirectAttributes.addFlashAttribute("nullAndNonNullUserFavoriteRecipeList",
+                nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
         redirectAttributes.addFlashAttribute("description", recipe.getDescription());
         return "redirect:/";
     }
 
     @RequestMapping(value = "/search-by-category", method = RequestMethod.GET)
-    public String searchByCategory(Recipe recipe, Model model, RedirectAttributes redirectAttributes){
+    public String searchByCategory(Recipe recipe, Model model, RedirectAttributes redirectAttributes, Principal principal){
         List<Recipe> recipes = new ArrayList<>();
+        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        User actualUser = userService.findByUsername(user.getUsername());
         if(recipe.getCategory() != null){
             recipes = recipeService.findByCategory(recipe.getCategory().getName());
+            redirectAttributes.addFlashAttribute("nullAndNonNullUserFavoriteRecipeList",
+                    nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
         }
         redirectAttributes.addFlashAttribute("recipes", recipes);
         redirectAttributes.addFlashAttribute("recipe", recipe);
@@ -192,5 +205,18 @@ public class RecipeController {
         }
 
         return String.format("redirect:/recipes/%s/detail", recipe.getId());
+    }
+
+    private List<Recipe> nullAndNonNullUserFavoriteRecipeList(List<Recipe> recipes, List<Recipe> favorites){
+        List<Recipe> nullAndNonNullUserFavoriteRecipeList = new ArrayList<>();
+        recipes.forEach(recipe -> {
+            if (favorites.contains(recipe)) {
+                nullAndNonNullUserFavoriteRecipeList.add(recipe);
+            } else {
+                nullAndNonNullUserFavoriteRecipeList.add(null);
+            }
+        });
+
+        return nullAndNonNullUserFavoriteRecipeList;
     }
 }
