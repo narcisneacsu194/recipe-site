@@ -17,12 +17,18 @@
 <div class="grid-container">
 
     <div th:replace="layout :: logo">
+        <a th:href="@{/}">
+            <h1>
+                <img th:src="@{/images/chefbot.svg}" height="60px"/>
+                <br/>
+                My Recipes
+            </h1>
+        </a>
     </div>
 
     <div class="grid-100">
         <div class="recipes">
-            <form th:action="@{/login}" method="post" th:object="${user}">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <form th:action="@{/sign-up}" method="post" th:object="${user}">
                 <div class="prefix-20 grid-60 suffix-20">
                     <p>
                         <input placeholder="Username" th:field="*{username}"> </input>
@@ -35,7 +41,12 @@
                 </div> <div class="clear"></div>
                 <div class="prefix-20 grid-60 suffix-20">
                     <p>
-                        <button>Login</button>
+                        <input placeholder="Password Again" type="password" th:field="*{matchingPassword}"> </input>
+                    </p>
+                </div> <div class="clear"></div>
+                <div class="prefix-20 grid-60 suffix-20">
+                    <p>
+                        <button th:action="@{/sign-up}">Sign-up</button>
                     </p>
                 </div> <div class="clear"></div>
             </form>

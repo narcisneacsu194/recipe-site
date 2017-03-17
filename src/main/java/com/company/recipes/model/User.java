@@ -31,6 +31,10 @@ public class User implements UserDetails{
     @Column(length = 100)
     private String password;
 
+    @NotNull
+    @Column(length = 100)
+    private String matchingPassword;
+
     @Column(nullable = false)
     private boolean enabled;
 
@@ -51,14 +55,16 @@ public class User implements UserDetails{
         id = null;
         username = null;
         password = null;
+        matchingPassword = null;
         role = null;
     }
 
-    public User(String username, boolean enabled, String password){
+    public User(String username, boolean enabled, String password, String matchingPassword){
         this();
         this.username = username;
         this.enabled = enabled;
         setPassword(password);
+        setMatchingPassword(matchingPassword);
     }
 
     public Long getId() {
@@ -74,7 +80,13 @@ public class User implements UserDetails{
     }
 
     public void setPassword(String password) {
-        this.password = PASSWORD_ENCODER.encode(password);
+        this.password = password;
+//        this.password = PASSWORD_ENCODER.encode(password);
+    }
+
+    public void encryptPasswords(){
+        password = PASSWORD_ENCODER.encode(password);
+        matchingPassword = PASSWORD_ENCODER.encode(matchingPassword);
     }
 
     public void setEnabled(boolean enabled) {
@@ -152,5 +164,14 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public void setMatchingPassword(String password){
+//        matchingPassword = PASSWORD_ENCODER.encode(password);
+        matchingPassword = password;
+    }
+
+    public String getMatchingPassword(){
+        return matchingPassword;
     }
 }

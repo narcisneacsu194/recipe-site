@@ -29,10 +29,12 @@ public class DatabaseLoader implements ApplicationRunner{
 
         Role role = new Role("ROLE_USER");
         roleDao.save(role);
-        User user = new User("user", true, "password");
+        User user = new User("user", true, "password", "password");
         user.setRole(role);
-        User user2 = new User("user2", true, "password");
+        User user2 = new User("user2", true, "password", "password");
         user2.setRole(role);
+        user.encryptPasswords();
+        user2.encryptPasswords();
         userDao.save(user);
         userDao.save(user2);
 
