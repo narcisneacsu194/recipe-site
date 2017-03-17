@@ -1,5 +1,6 @@
 package com.company.recipes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,10 +30,12 @@ public class User implements UserDetails{
 
     @NotNull
     @Column(length = 100)
+    @JsonIgnore
     private String password;
 
     @NotNull
     @Column(length = 100)
+    @JsonIgnore
     private String matchingPassword;
 
     @Column(nullable = false)
@@ -40,6 +43,7 @@ public class User implements UserDetails{
 
     @OneToOne
     @JoinColumn(name = "role_id")
+    @JsonIgnore
     private Role role;
 
     @ManyToMany(targetEntity = Recipe.class)
@@ -81,7 +85,6 @@ public class User implements UserDetails{
 
     public void setPassword(String password) {
         this.password = password;
-//        this.password = PASSWORD_ENCODER.encode(password);
     }
 
     public void encryptPasswords(){
@@ -167,7 +170,6 @@ public class User implements UserDetails{
     }
 
     public void setMatchingPassword(String password){
-//        matchingPassword = PASSWORD_ENCODER.encode(password);
         matchingPassword = password;
     }
 
