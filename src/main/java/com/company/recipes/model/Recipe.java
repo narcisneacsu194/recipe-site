@@ -162,7 +162,7 @@ public class Recipe extends BaseEntity{
         this.user = user;
     }
 
-    public static enum Category{
+    public enum Category{
         BREAKFAST("Breakfast"),
         LUNCH("Lunch"),
         DINNER("Dinner"),

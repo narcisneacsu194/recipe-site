@@ -1,41 +1,32 @@
 package com.company.recipes.dao;
 
-import com.company.recipes.Application;
 import com.company.recipes.model.Step;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@DatabaseSetup("classpath:steps.xml")
-@TestExecutionListeners({
-        DependencyInjectionTestExecutionListener.class,
-        DbUnitTestExecutionListener.class
-})
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+                properties = "spring.datasource.url = jdbc:h2:./database/test-StepDaoTest-steps;DB_CLOSE_ON_EXIT=FALSE")
 public class StepDaoTest {
     @Autowired
     private StepDao dao;
 
     @Test
-    public void findAll_ShouldReturnThree() throws Exception{
-        Assert.assertThat(dao.findAll(), hasSize(3));
+    public void findAll_ShouldReturn694Steps() throws Exception{
+        Assert.assertThat(dao.findAll(), hasSize(694));
     }
 
     @Test
     public void findOne_ShouldReturnNull() throws Exception{
-        Assert.assertThat(dao.findOne(5L), nullValue(Step.class));
+        Assert.assertThat(dao.findOne(695L), nullValue(Step.class));
     }
 
     @Test
@@ -57,7 +48,7 @@ public class StepDaoTest {
 
         dao.save(steps);
 
-        Assert.assertThat(dao.findAll(), hasSize(6));
+        Assert.assertThat(dao.findAll(), hasSize(697));
     }
 
     @Test

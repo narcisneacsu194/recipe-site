@@ -17,16 +17,33 @@
             <div class="grid-100 row controls">
                 <div class="grid-100">
                     <h2 sec:authentication="name"> Chandra S. </h2>
+                    <h3>Owned recipes</h3>
                 </div>
             </div> <div class="clear"></div>
 
             <div th:replace="layout :: recipe-list"></div>
 
+            <div class="grid-100 row controls">
+                <div class="grid-100">
+                    <h3>Favored recipes</h3>
+                </div>
+            </div>
+
             <div class="clear"></div>
 
-            <div class="row">&nbsp;</div>
+            <div class="grid-100 row addHover" th:each="recipe : ${favoredRecipes}" th:fragment="recipe-list">
+                <a th:href="@{|/recipes/${recipe.id}/detail|}">
+                    <div class="grid-70">
+                        <p>
+                            <span><img th:src="@{/images/favorited.svg}" height="12px"/></span>
+                            <span th:text="${recipe.name}"></span>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
 
-        </div> <!-- recipes -->
     </div> <!-- grid-100 -->
 </div> <!-- grid-container -->
 </body>

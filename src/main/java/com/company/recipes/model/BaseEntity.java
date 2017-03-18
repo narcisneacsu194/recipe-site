@@ -8,9 +8,6 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Version
-    private Long version;
-
     public Long getId(){
         return id;
     }

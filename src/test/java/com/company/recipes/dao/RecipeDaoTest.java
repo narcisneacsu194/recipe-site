@@ -1,40 +1,32 @@
 package com.company.recipes.dao;
 
-import com.company.recipes.Application;
 import com.company.recipes.model.Recipe;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@DatabaseSetup("classpath:recipes.xml")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        DbUnitTestExecutionListener.class
-})
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+                properties = "spring.datasource.url = jdbc:h2:./database/test-RecipeDaoTest-recipes;DB_CLOSE_ON_EXIT=FALSE")
 public class RecipeDaoTest {
     @Autowired
     private RecipeDao dao;
 
     @Test
-    public void findAll_ShouldReturnThree() throws Exception{
-        Assert.assertThat(dao.findAll(), hasSize(3));
+    public void findAll_ShouldReturn100Recipes() throws Exception{
+        Assert.assertThat(dao.findAll(), hasSize(100));
     }
 
     @Test
     public void findOne_ShouldReturnNull() throws Exception{
-        Assert.assertThat(dao.findOne(5L), nullValue(Recipe.class));
+        Assert.assertThat(dao.findOne(101L), nullValue(Recipe.class));
     }
 
     @Test
@@ -60,7 +52,7 @@ public class RecipeDaoTest {
 
         dao.save(recipes);
 
-        Assert.assertThat(dao.findAll(), hasSize(6));
+        Assert.assertThat(dao.findAll(), hasSize(103));
     }
 
     @Test

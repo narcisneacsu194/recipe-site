@@ -39,7 +39,17 @@
                 </div>
             </div> <div class="clear"></div>
 
-            <div th:replace="layout :: recipe-list"></div>
+            <div class="grid-100 row addHover" th:each="recipe : ${recipes}" th:fragment="recipe-list">
+                <a th:href="@{|/recipes/${recipe.id}/detail|}">
+                    <div class="grid-70">
+                        <p>
+                            <span th:if="${nullAndNonNullUserFavoriteRecipeList[__${recipeStat.index}__] != null}"><img th:src="@{/images/favorited.svg}" height="12px"/></span>
+                            <span th:if="${nullAndNonNullUserFavoriteRecipeList[__${recipeStat.index}__] == null}"><img th:src="@{/images/favorite.svg}" height="12px"/></span>
+                            <span th:text="${recipe.name}"></span>
+                        </p>
+                    </div>
+                </a>
+            </div>
 
             <div class="clear"></div>
 

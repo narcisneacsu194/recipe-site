@@ -30,11 +30,16 @@ public class UserController {
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String userProfile(Model model, Principal principal){
         List<Recipe> recipes = recipeService.findAllFromSpecificUser();
+        List<Recipe> ownedRecipes = recipeService.findAllFromSpecificUser();
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
         model.addAttribute("recipes", recipes);
+        List<Recipe> favoredRecipes = actualUser.getFavoritedRecipes();
+        model.addAttribute("recipes", ownedRecipes);
+        model.addAttribute("favoredRecipes", favoredRecipes);
         model.addAttribute("nullAndNonNullUserFavoriteRecipeList",
                 nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
+        nullAndNonNullUserFavoriteRecipeList(ownedRecipes, actualUser.getFavoritedRecipes());
         return "user/profile";
     }
 
