@@ -57,27 +57,29 @@ public class DatabaseLoader implements ApplicationRunner{
                     break;
             }
             Recipe recipe = new Recipe("Name " + value, "Description " + value, recipeCategory,
-                    13, 15, "http://placehold.it/350x150");
+                    value, value, "http://placehold.it/" + value + "/350x150");
 
-            IntStream.range(1, 5).forEach(value2 -> {
-                Ingredient ingredient = new Ingredient("Item " + value2, "State " + value2, 23);
-                Step step = new Step("Step" + value2);
+            if(value < 50){
+                user.addOwnedRecipe(recipe);
+                recipe.setUser(user);
+            }else{
+                user2.addOwnedRecipe(recipe);
+                recipe.setUser(user2);
+            }
+
+            IntStream.range(1, 6).forEach(value2 -> {
+                Ingredient ingredient = new Ingredient("Item " + value + "-" + value2, "State " + value + "-" + value2, value2);
+                Step step = new Step("Step " + value + "-" + value2);
 
                 recipe.addIngredient(ingredient);
                 recipe.addStep(step);
                 ingredient.setRecipe(recipe);
                 step.setRecipe(recipe);
 
-                if(value < 50){
-                    user.addOwnedRecipe(recipe);
-                    recipe.setUser(user);
-                }else{
-                    user2.addOwnedRecipe(recipe);
-                    recipe.setUser(user2);
-                }
-
-                recipeDao.save(recipe);
             });
+
+
+            recipeDao.save(recipe);
 
 
         });
