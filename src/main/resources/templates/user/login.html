@@ -22,7 +22,8 @@
     <div class="grid-100">
         <div class="recipes">
             <form th:action="@{/login}" method="post" th:object="${user}">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                 <div class="prefix-20 grid-60 suffix-20">
                     <p>
                         <input placeholder="Username" th:field="*{username}"> </input>

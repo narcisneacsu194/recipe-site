@@ -38,7 +38,7 @@ public class DatabaseLoader implements ApplicationRunner{
         userDao.save(user);
         userDao.save(user2);
 
-        IntStream.range(1, 100).forEach(value -> {
+        IntStream.range(1, 7).forEach(value -> {
             Recipe.Category recipeCategory = Recipe.Category.BREAKFAST;
             Random random = new Random();
             int randomNum = random.nextInt(4);
@@ -59,7 +59,7 @@ public class DatabaseLoader implements ApplicationRunner{
             Recipe recipe = new Recipe("Name " + value, "Description " + value, recipeCategory,
                     value, value, "http://placehold.it/" + value + "/350x150");
 
-            if(value < 50){
+            if(value <= 3){
                 user.addOwnedRecipe(recipe);
                 recipe.setUser(user);
             }else{
