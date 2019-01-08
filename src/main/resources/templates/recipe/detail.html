@@ -31,17 +31,8 @@
                 </div>
             </div> <div class="clear"></div>
 
-            <div class="grid-100 row">
-                <div class="grid-20">
-                    <p>
-                        <label> Photo </label>
-                    </p>
-                </div>
-                <div class="grid-40">
-                    <p th:text="${recipe.photoUrl}">
-                        [photoUrl]
-                    </p>
-                </div>
+            <div class="grid-100 row" id="recipe-image-div">
+                <img th:src="${recipe.photoUrl}" id="recipe-image"/>
             </div> <div class="clear"></div>
 
             <div class="grid-100 row">
