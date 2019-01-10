@@ -31,17 +31,17 @@ public class RecipeModelTest {
         Assert.assertEquals(Recipe.Category.BREAKFAST, recipe.getCategory());
     }
 
-    @Test
-    public void setPrepTime_ShouldSetPrepTimeForRecipe() throws Exception{
-        recipe.setPrepTime(1);
-        Assert.assertEquals((Integer)1, recipe.getPrepTime());
-    }
-
-    @Test
-    public void setCookTime_ShouldSetCookTimeForRecipe() throws Exception{
-        recipe.setCookTime(1);
-        Assert.assertEquals((Integer)1, recipe.getCookTime());
-    }
+//    @Test
+//    public void setPrepTime_ShouldSetPrepTimeForRecipe() throws Exception{
+//        recipe.setPrepTime(1);
+//        Assert.assertEquals((Integer)1, recipe.getPrepTime());
+//    }
+//
+//    @Test
+//    public void setCookTime_ShouldSetCookTimeForRecipe() throws Exception{
+//        recipe.setCookTime(1);
+//        Assert.assertEquals((Integer)1, recipe.getCookTime());
+//    }
 
     @Test
     public void setPhotoUrl_ShouldSetPhotoUrlForRecipe() throws Exception{

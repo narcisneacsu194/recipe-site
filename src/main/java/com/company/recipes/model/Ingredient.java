@@ -10,14 +10,8 @@ import javax.validation.constraints.Size;
 public class Ingredient extends BaseEntity{
 
     @NotNull
-    @Size(min = 2, max = 50)
-    private String item;
-
-    private String condition;
-
-    @NotNull
-    @Min(value = 1)
-    private Integer quantity;
+    @Size(min = 2)
+    private String description;
 
     @ManyToOne
     private Recipe recipe;
@@ -26,35 +20,9 @@ public class Ingredient extends BaseEntity{
         super();
     }
 
-    public Ingredient(String item, String condition, Integer quantity){
+    public Ingredient(String description){
         this();
-        this.item = item;
-        this.condition = condition;
-        this.quantity = quantity;
-    }
-
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        this.description = description;
     }
 
     public Recipe getRecipe() {
@@ -63,5 +31,13 @@ public class Ingredient extends BaseEntity{
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

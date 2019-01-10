@@ -2,6 +2,7 @@ package com.company.recipes.model;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,21 +13,26 @@ import java.util.List;
 public class Recipe extends BaseEntity{
 
     @NotNull
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 100)
     private String name;
 
+    @Size(max = 1000)
     private String description;
 
     @NotNull
     private Category category;
 
-    @NotNull
-    @Min(value = 1)
-    private Integer prepTime;
+    private Integer prepTimeHour;
 
-    @NotNull
-    @Min(value = 1)
-    private Integer cookTime;
+    @Min(value = 2)
+    @Max(value = 59)
+    private Integer prepTimeMinute;
+
+    private Integer cookTimeHour;
+
+    @Min(value = 2)
+    @Max(value = 59)
+    private Integer cookTimeMinute;
 
     @Valid
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
@@ -54,13 +60,16 @@ public class Recipe extends BaseEntity{
     }
 
     public Recipe(String name, String description, Category category,
-                  Integer prepTime, Integer cookTime, String photoUrl){
+                  Integer prepTimeHour, Integer prepTimeMinute,
+                  Integer cookTimeHour, Integer cookTimeMinute, String photoUrl){
         this();
         this.name = name;
         this.description = description;
         this.category = category;
-        this.prepTime = prepTime;
-        this.cookTime = cookTime;
+        this.prepTimeHour = prepTimeHour;
+        this.prepTimeMinute = prepTimeMinute;
+        this.cookTimeHour = cookTimeHour;
+        this.cookTimeMinute = cookTimeMinute;
         this.photoUrl = photoUrl;
         ingredients = new ArrayList<>();
         steps = new ArrayList<>();
@@ -88,22 +97,6 @@ public class Recipe extends BaseEntity{
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public Integer getPrepTime() {
-        return prepTime;
-    }
-
-    public void setPrepTime(Integer prepTime) {
-        this.prepTime = prepTime;
-    }
-
-    public Integer getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(Integer cookTime) {
-        this.cookTime = cookTime;
     }
 
     public List<Ingredient> getIngredients() {
@@ -160,6 +153,38 @@ public class Recipe extends BaseEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getPrepTimeHour() {
+        return prepTimeHour;
+    }
+
+    public void setPrepTimeHour(Integer prepTimeHour) {
+        this.prepTimeHour = prepTimeHour;
+    }
+
+    public Integer getCookTimeHour() {
+        return cookTimeHour;
+    }
+
+    public void setCookTimeHour(Integer cookTimeHour) {
+        this.cookTimeHour = cookTimeHour;
+    }
+
+    public Integer getPrepTimeMinute() {
+        return prepTimeMinute;
+    }
+
+    public void setPrepTimeMinute(Integer prepTimeMinute) {
+        this.prepTimeMinute = prepTimeMinute;
+    }
+
+    public Integer getCookTimeMinute() {
+        return cookTimeMinute;
+    }
+
+    public void setCookTimeMinute(Integer cookTimeMinute) {
+        this.cookTimeMinute = cookTimeMinute;
     }
 
     public enum Category{

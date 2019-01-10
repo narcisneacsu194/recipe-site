@@ -15,13 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -123,10 +121,19 @@ public class RecipeController {
     public String addRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes,
                             Principal principal){
         if(result.hasErrors()){
-            redirectAttributes.addFlashAttribute("flash",
-                    new FlashMessage("One or more fields have invalid input. Please try again!", FlashMessage.Status.FAILURE));
-            redirectAttributes.addFlashAttribute("recipe", recipe);
-            return "redirect:/recipes/add";
+
+            return redirectBackToForm("One or more fields have invalid input. Please try again!",
+                    redirectAttributes, recipe);
+        }
+
+        if(recipe.getPrepTimeHour() == null && recipe.getPrepTimeMinute() == null){
+            return redirectBackToForm("You need to specify at least an hour or a minute for the prep time property!",
+                    redirectAttributes, recipe);
+        }
+
+        if(recipe.getCookTimeHour() == null && recipe.getCookTimeMinute() == null){
+            return redirectBackToForm("You need to specify at least an hour or a minute for the cook time property!",
+                    redirectAttributes, recipe);
         }
 
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
@@ -205,6 +212,13 @@ public class RecipeController {
         }
 
         return String.format("redirect:/recipes/%s/detail", recipe.getId());
+    }
+
+    private String redirectBackToForm(String message, RedirectAttributes redirectAttributes, Recipe recipe){
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage(message, FlashMessage.Status.FAILURE));
+        redirectAttributes.addFlashAttribute("recipe", recipe);
+        return "redirect:/recipes/add";
     }
 
     private List<Recipe> nullAndNonNullUserFavoriteRecipeList(List<Recipe> recipes, List<Recipe> favorites){

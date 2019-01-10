@@ -45,7 +45,7 @@ $("#add-another-step-button").click(function () {
         divWithLastStep
             .children('div')
             .children('p')
-            .children('input')
+            .children('textarea')
             .attr('id')
             .split('.')[0]
             .split('steps')[1]
@@ -67,9 +67,9 @@ $("#add-another-step-button").click(function () {
                 newHiddenInputName + "'>" +
             "<div class='prefix-20 grid-80'>" +
                 "<p>" +
-                    "<input id='" + newStepInputId + "' " +
-                    "name='" + newStepInputName + "' " +
-                    "placeholder='description...'>" +
+                     "<textarea id='" + newStepInputId + "' " +
+                     "name='" + newStepInputName + "' " +
+                     "rows='4' cols='50' placeholder='description...'></textarea>" +
                 "</p>" +
             "</div>" +
         "</div>";
@@ -79,6 +79,15 @@ $("#add-another-step-button").click(function () {
         newDiv
     );
 
+});
+
+$("#remove-step-button").click(function(){
+    event.preventDefault();
+
+    var lastIngredientRow = $(".step-row").last();
+    var len = $(".step-row").length;
+    if(len > 1)
+        lastIngredientRow.remove();
 });
 
 
@@ -199,41 +208,21 @@ $("#add-another-ingredient-button").click(function () {
         var newHiddenInputId = 'ingredients' + newId + '.id';
         var newHiddenInputName = 'ingredients[' + newId + '].id';
 
-        var newIngredientItemInputIdField = 'ingredients' + newId + '.item';
-        var newIngredientItemInputNameField = 'ingredients[' + newId + '].item';
-
-        var newIngredientConditionInputIdField = 'ingredients' + newId + '.condition';
-        var newIngredientConditionInputNameField = 'ingredients[' + newId + '].condition';
-
-        var newIngredientQuantityInputIdField = 'ingredients' + newId + '.quantity';
-        var newIngredientQuantityInputNameField = 'ingredients[' + newId + '].quantity';
+        var newIngredientDescriptionInputIdField = 'ingredients' + newId + '.description';
+        var newIngredientDescriptionInputNameField = 'ingredients[' + newId + '].description';
 
         // create new div
         var newDiv =
-            "<div class='step-row'>" +
+            "<div class='ingredient-row'>" +
                 "<input type='hidden' id='" + newHiddenInputId + "' name='" +
                     newHiddenInputName + "'>" +
-                "<div class='prefix-20 grid-30'>" +
+                "<div class='prefix-20 grid-80'>" +
                     "<p>" +
-                        "<input id='" + newIngredientItemInputIdField + "' " +
-                        "name='" + newIngredientItemInputNameField + "' " +
-                        "placeholder='item...'>" +
+                        "<input id='" + newIngredientDescriptionInputIdField + "' " +
+                        "name='" + newIngredientDescriptionInputNameField + "' " +
+                        "placeholder='description...'>" +
                     "</p>" +
                 "</div>" +
-                "<div class='grid-30'>" +
-                    "<p>" +
-                        "<input id='" + newIngredientConditionInputIdField + "' " +
-                        "name='" + newIngredientConditionInputNameField  + "' " +
-                        "placeholder='condition...'>" +
-                    "</p>" +
-                "</div>" +
-                "<div class='grid-10 suffix-10'>" +
-                    "<p>" +
-                        "<input id='" + newIngredientQuantityInputIdField + "' " +
-                        "name='" + newIngredientQuantityInputNameField  + "' " +
-                        "placeholder='...'>" +
-                    "</p>" +
-                "</div>"
             "</div>";
 
         // add newly created div after last one
@@ -241,6 +230,15 @@ $("#add-another-ingredient-button").click(function () {
             newDiv
         );
 
+});
+
+$("#remove-ingredient-button").click(function(){
+    event.preventDefault();
+
+    var lastIngredientRow = $(".ingredient-row").last();
+    var len = $(".ingredient-row").length;
+    if(len > 1)
+    lastIngredientRow.remove();
 });
 
 

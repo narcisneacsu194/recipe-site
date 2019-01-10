@@ -19,12 +19,6 @@
                 <div class="grid-50">
                     <h2> Recipe Editor </h2>
                 </div>
-                <div class="grid-50">
-                    <div class="flush-right">
-                        <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();"><button>Save Recipe</button></a>
-                        <a th:href="@{/}">Cancel</a>
-                    </div>
-                </div>
             </div> <div class="clear"></div>
 
             <div class="grid-100 row">
@@ -92,7 +86,12 @@
                 </div>
                 <div class="grid-20">
                     <p>
-                        <input th:value="${recipe.prepTime}" th:field="*{prepTime}" placeholder="prep time..."/>
+                        <input th:value="${recipe.prepTimeHour}" th:field="*{prepTimeHour}" placeholder="hours"/>
+                    </p>
+                </div>
+                <div class="grid-20">
+                    <p>
+                        <input th:value="${recipe.prepTimeMinute}" th:field="*{prepTimeMinute}" placeholder="minutes"/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -105,7 +104,12 @@
                 </div>
                 <div class="grid-20">
                     <p>
-                        <input th:value="${recipe.cookTime}" th:field="*{cookTime}" placeholder="cook time..."/>
+                        <input th:value="${recipe.cookTimeHour}" th:field="*{cookTimeHour}" placeholder="hours"/>
+                    </p>
+                </div>
+                <div class="grid-20">
+                    <p>
+                        <input th:value="${recipe.cookTimeMinute}" th:field="*{cookTimeMinute}" placeholder="minutes"/>
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -118,34 +122,14 @@
                 </div>
                 <div class="grid-30">
                     <p class="label-spacing">
-                        <label> Item </label>
-                    </p>
-                </div>
-                <div class="grid-30">
-                    <p class="label-spacing">
-                        <label> Condition </label>
-                    </p>
-                </div>
-                <div class="grid-20">
-                    <p class="label-spacing">
-                        <label> Quantity </label>
+                        <label> Description </label>
                     </p>
                 </div>
 
                 <div class="ingredient-row" th:if="*{ingredients == null}">
-                    <div class="prefix-20 grid-30">
+                    <div class="prefix-20 grid-80">
                         <p>
-                            <input id="ingredients0.item" name="ingredients[0].item" placeholder="item..."/>
-                        </p>
-                    </div>
-                    <div class="grid-30">
-                        <p>
-                            <input id="ingredients0.condition" name="ingredients[0].condition" placeholder="condition..."/>
-                        </p>
-                    </div>
-                    <div class="grid-10 suffix-10">
-                        <p>
-                            <input id="ingredients0.quantity" name="ingredients[0].quantity" placeholder="..."/>
+                            <input id="ingredients0.description" name="ingredients[0].description" placeholder="description..."/>
                         </p>
                     </div>
                 </div>
@@ -157,24 +141,20 @@
 
                     <div class="prefix-20 grid-30">
                         <p>
-                            <input th:field="*{ingredients[__${ingredientStat.index}__].item}" placeholder="item..."/>
-                        </p>
-                    </div>
-                    <div class="grid-30">
-                        <p>
-                            <input th:field="*{ingredients[__${ingredientStat.index}__].condition}" placeholder="condition..."/>
-                        </p>
-                    </div>
-                    <div class="grid-10 suffix-10">
-                        <p>
-                            <input th:field="*{ingredients[__${ingredientStat.index}__].quantity}" placeholder="..."/>
+                            <input th:field="*{ingredients[__${ingredientStat.index}__].description}" placeholder="description..."/>
                         </p>
                     </div>
                 </div>
 
-                <div class="prefix-20 grid-80 add-row">
+                <div class="prefix-20 grid-30 add-row">
                     <p>
-                        <button id="add-another-ingredient-button">+ Add Another Ingredient</button>
+                        <button id="add-another-ingredient-button">+ Add Ingredient</button>
+                    </p>
+                </div>
+
+                <div class="grid-30">
+                    <p>
+                        <button id="remove-ingredient-button">- Remove Ingredient</button>
                     </p>
                 </div>
 
@@ -195,7 +175,7 @@
                 <div class="step-row" th:if="*{steps == null}">
                     <div class="prefix-20 grid-80">
                         <p>
-                            <input id="steps0.description" name="steps[0].description" placeholder="description..."/>
+                            <textarea id="steps0.description" name="steps[0].description" rows="4" cols="50" placeholder="description..."></textarea>
                         </p>
                     </div>
                 </div>
@@ -207,20 +187,36 @@
                     <div class="prefix-20 grid-80">
                         <p>
                             <input th:field="*{steps[__${stepStat.index}__].description}" placeholder="description..."/>
+                            <!--<textarea th:field="*{steps[__${stepStat.index}__].description}" rows="4" cols="50" placeholder="description..."></textarea>-->
                         </p>
                     </div>
                 </div>
 
                 <!---->
-                <div class="prefix-20 grid-80 add-row">
+                <div class="prefix-20 grid-30 add-row">
                     <p>
-                        <button id="add-another-step-button">+ Add Another Step</button>
+                        <button id="add-another-step-button">+ Add Step</button>
+                    </p>
+                </div>
+
+                <div class="grid-30">
+                    <p>
+                        <button id="remove-step-button">- Remove Step</button>
                     </p>
                 </div>
 
             </div> <div class="clear"></div>
 
-            <div class="row">&nbsp;</div>
+            <!--<div class="row">&nbsp;</div>-->
+
+                <div class="grid-100 row controls">
+                    <div class="grid-50" id="divElement">
+                        <div>
+                            <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();"><button>Save Recipe</button></a>
+                            <a th:href="@{/}">Cancel</a>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div> <!-- recipes -->
 

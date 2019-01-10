@@ -38,6 +38,11 @@ public class DatabaseLoader implements ApplicationRunner{
         userDao.save(user);
         userDao.save(user2);
 
+//        Recipe.Category recipeCategory = Recipe.Category.BREAKFAST;
+//
+//        Recipe recipe = new Recipe("Name " + value, "Description " + value, recipeCategory,
+//                    value, value, "http://placehold.it/" + value + "/350x150");
+
         IntStream.range(1, 7).forEach(value -> {
             Recipe.Category recipeCategory = Recipe.Category.BREAKFAST;
             Random random = new Random();
@@ -57,7 +62,7 @@ public class DatabaseLoader implements ApplicationRunner{
                     break;
             }
             Recipe recipe = new Recipe("Name " + value, "Description " + value, recipeCategory,
-                    value, value, "http://placehold.it/" + value + "/350x150");
+                    value, value + 1, value, value + 1, "http://placehold.it/" + value + "/350x150");
 
             if(value <= 3){
                 user.addOwnedRecipe(recipe);
@@ -68,7 +73,7 @@ public class DatabaseLoader implements ApplicationRunner{
             }
 
             IntStream.range(1, 6).forEach(value2 -> {
-                Ingredient ingredient = new Ingredient("Item " + value + "-" + value2, "State " + value + "-" + value2, value2);
+                Ingredient ingredient = new Ingredient("Ingredient " + value + " " + value2);
                 Step step = new Step("Step " + value + "-" + value2);
 
                 recipe.addIngredient(ingredient);

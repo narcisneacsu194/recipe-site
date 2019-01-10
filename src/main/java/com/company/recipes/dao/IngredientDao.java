@@ -17,10 +17,6 @@ public interface IngredientDao extends PagingAndSortingRepository<Ingredient, Lo
     @Query("select i from Ingredient i")
     List<Ingredient> findAll();
 
-    @RestResource(rel = "item-containing", path = "containsItem")
-    Page<Ingredient> findByItemContaining(@Param("item") String item, Pageable page);
-
-    @RestResource(rel = "condition-containing", path = "containsCondition")
-    Page<Ingredient> findByConditionContaining(@Param("condition") String condition, Pageable page);
-
+    @RestResource(rel = "description-containing", path = "containsDescription")
+    Page<Ingredient> findByDescriptionContaining(@Param("description") String description, Pageable page);
 }

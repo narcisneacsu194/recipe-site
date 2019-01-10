@@ -15,10 +15,10 @@
         <div class="recipes">
 
             <div class="grid-100 row controls">
-                <div class="grid-50">
+                <div class="grid-90">
                     <h2 th:text="${recipe.name}"> Brioche French Toast with Nutella </h2>
                 </div>
-                <div class="grid-50">
+                <div class="grid-10">
                     <h2 class="flush-right">
                         <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" method="post">
 
@@ -41,7 +41,7 @@
                         <label> Name </label>
                     </p>
                 </div>
-                <div class="grid-40">
+                <div class="grid-80">
                     <p th:text="${recipe.name}">
                         Brioche French Toast with Nutella
                     </p>
@@ -54,7 +54,7 @@
                         <label> Description </label>
                     </p>
                 </div>
-                <div class="grid-40">
+                <div class="grid-80">
                     <p th:text="${recipe.description}">
                         Yummmy dessert toast covered in egg wash and topped with nutella and seasonal fruit.
                     </p>
@@ -80,8 +80,14 @@
                         <label> Prep Time </label>
                     </p>
                 </div>
-                <div class="grid-20">
-                    <p th:text="${recipe.prepTime}">
+                <div class="grid-80">
+                    <p th:if="${recipe.prepTimeHour != null AND recipe.prepTimeMinute != null}" th:text="${recipe.prepTimeHour + ' hour(s) and ' + recipe.prepTimeMinute + ' minutes'}">
+                        5 hours
+                    </p>
+                    <p th:if="${recipe.prepTimeHour != null AND recipe.prepTimeMinute == null}" th:text="${recipe.prepTimeHour + ' hour(s)'}">
+                        5 hours
+                    </p>
+                    <p th:if="${recipe.prepTimeHour == null AND recipe.prepTimeMinute != null}" th:text="${recipe.prepTimeMinute + ' minutes'}">
                         5 minutes
                     </p>
                 </div>
@@ -93,9 +99,15 @@
                         <label> Cook Time </label>
                     </p>
                 </div>
-                <div class="grid-20">
-                    <p th:text="${recipe.cookTime}">
-                        15 minutes
+                <div class="grid-80">
+                    <p th:if="${recipe.cookTimeHour != null AND recipe.cookTimeMinute != null}" th:text="${recipe.cookTimeHour + ' hour(s) and ' + recipe.cookTimeMinute + ' minutes'}">
+                        5 hours
+                    </p>
+                    <p th:if="${recipe.cookTimeHour != null AND recipe.cookTimeMinute == null}" th:text="${recipe.cookTimeHour + ' hour(s)'}">
+                        5 hours
+                    </p>
+                    <p th:if="${recipe.cookTimeHour == null AND recipe.cookTimeMinute != null}" th:text="${recipe.cookTimeMinute + ' minutes'}">
+                        5 minutes
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -108,34 +120,14 @@
                 </div>
                 <div class="grid-30">
                     <p>
-                        <label> Item </label>
-                    </p>
-                </div>
-                <div class="grid-30">
-                    <p>
-                        <label> Condition </label>
-                    </p>
-                </div>
-                <div class="grid-20">
-                    <p>
-                        <label> Quantity </label>
+                        <label> Description </label>
                     </p>
                 </div>
 
                 <div class="ingredient-row" th:each="ingredient : ${ingredients}">
-                    <div class="prefix-20 grid-30">
-                        <p th:text="${ingredient.item}">
+                    <div class="prefix-20 grid-80">
+                        <p th:text="${ingredient.description}">
                             Eggs
-                        </p>
-                    </div>
-                    <div class="grid-30">
-                        <p th:text="${ingredient.condition}">
-                            Fresh
-                        </p>
-                    </div>
-                    <div class="grid-10 suffix-10">
-                        <p th:text="${ingredient.quantity}">
-                            2
                         </p>
                     </div>
                 </div>
@@ -154,9 +146,9 @@
                     </p>
                 </div>
 
-                <div class="step-row" th:each="step : ${steps}">
+                <div class="step-row" th:each="step, iterStat : ${steps}">
                     <div class="prefix-20 grid-80">
-                        <p th:text="${step.description}">
+                        <p th:text="${iterStat.count + ') ' + step.description}">
                             1. Crack your eggs and beat them.
                         </p>
                     </div>
