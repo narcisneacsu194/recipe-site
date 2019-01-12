@@ -31,6 +31,9 @@
                     <p>
                         <input th:value="${recipe.photoUrl}" th:field="*{photoUrl}" placeholder="url..."/>
                     </p>
+                    <p th:if="${urlError != null}" th:text="${urlError}" class="error-text">
+                        URL Error.
+                    </p>
                 </div>
             </div> <div class="clear"></div>
 
@@ -44,6 +47,13 @@
                     <p>
                         <input th:value="${recipe.name}" th:field="*{name}" placeholder="name..."/>
                     </p>
+                    <p th:if="${nameError != null}" class="error-text" th:text="${nameError}">
+                        Name Error.
+                    </p>
+                    <p th:if="${uniqueConstraintError != null}" class="error-text"
+                       th:text="${uniqueConstraintError}">
+                        Name Error.
+                    </p>
                 </div>
             </div> <div class="clear"></div>
 
@@ -56,6 +66,9 @@
                 <div class="grid-40">
                     <p>
                         <textarea th:value="${recipe.description}" th:field="*{description}" placeholder="description..."> </textarea>
+                    </p>
+                    <p th:if="${descriptionError}" class="error-text" th:text="${descriptionError}">
+                        Description Error.
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -75,6 +88,9 @@
                                     th:text="${category.name}"></option>
                         </select>
                     </p>
+                    <p th:if="${categoryError != null}" th:text="${categoryError}" class="error-text">
+                        Category Error.
+                    </p>
                 </div>
             </div> <div class="clear"></div>
 
@@ -83,17 +99,27 @@
                     <p class="label-spacing">
                         <label> Prep Time </label>
                     </p>
+                    <p th:if="${prepTimeError != null}" th:text="${prepTimeError}" class="error-text">
+                        Prep Time Error.
+                    </p>
                 </div>
                 <div class="grid-20">
                     <p>
                         <input th:value="${recipe.prepTimeHour}" th:field="*{prepTimeHour}" placeholder="hours"/>
+                    </p>
+                    <p th:if="${prepTimeHourError != null}" th:text="${prepTimeHourError}" class="error-text">
+                        Prep Time Hour Error.
                     </p>
                 </div>
                 <div class="grid-20">
                     <p>
                         <input th:value="${recipe.prepTimeMinute}" th:field="*{prepTimeMinute}" placeholder="minutes"/>
                     </p>
+                    <p th:if="${prepTimeMinuteError != null}" th:text="${prepTimeMinuteError}" class="error-text">
+                        Prep Time Minute Error.
+                    </p>
                 </div>
+
             </div> <div class="clear"></div>
 
             <div class="grid-100 row">
@@ -101,15 +127,24 @@
                     <p class="label-spacing">
                         <label> Cook Time </label>
                     </p>
+                    <p th:if="${cookTimeError != null}" th:text="${cookTimeError}" class="error-text">
+                        Cook Time Error.
+                    </p>
                 </div>
                 <div class="grid-20">
                     <p>
                         <input th:value="${recipe.cookTimeHour}" th:field="*{cookTimeHour}" placeholder="hours"/>
                     </p>
+                    <p th:if="${cookTimeHourError != null}" th:text="${cookTimeHourError}" class="error-text">
+                        Cook Time Hour Error.
+                    </p>
                 </div>
                 <div class="grid-20">
                     <p>
                         <input th:value="${recipe.cookTimeMinute}" th:field="*{cookTimeMinute}" placeholder="minutes"/>
+                    </p>
+                    <p th:if="${cookTimeMinuteError != null}" th:text="${cookTimeMinuteError}" class="error-text">
+                        Cook Time Minute Error.
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -139,9 +174,14 @@
                     <input type="hidden"
                             th:field="*{ingredients[__${ingredientStat.index}__].id}"/>
 
-                    <div class="prefix-20 grid-30">
+                    <div class="prefix-20 grid-80">
                         <p>
                             <input th:field="*{ingredients[__${ingredientStat.index}__].description}" placeholder="description..."/>
+                        </p>
+                        <p th:if="${ingredient.error != null}"
+                           th:text="${ingredient.error}"
+                           class="error-text">
+                            The description of the ingredient must have at least two characters.
                         </p>
                     </div>
                 </div>
@@ -186,8 +226,12 @@
 
                     <div class="prefix-20 grid-80">
                         <p>
-                            <input th:field="*{steps[__${stepStat.index}__].description}" placeholder="description..."/>
-                            <!--<textarea th:field="*{steps[__${stepStat.index}__].description}" rows="4" cols="50" placeholder="description..."></textarea>-->
+                            <textarea th:field="*{steps[__${stepStat.index}__].description}" placeholder="description..."></textarea>
+                        </p>
+                        <p th:if="${step.error != null}"
+                           th:text="${step.error}"
+                           class="error-text">
+                            The description of the step must have at least two characters.
                         </p>
                     </div>
                 </div>

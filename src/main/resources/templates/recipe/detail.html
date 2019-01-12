@@ -32,7 +32,7 @@
             </div> <div class="clear"></div>
 
             <div class="grid-100 row" id="recipe-image-div">
-                <img th:src="${recipe.photoUrl}" id="recipe-image"/>
+                <img th:src="${recipe.photoUrl}" id="recipe-image" alt="Image not found"/>
             </div> <div class="clear"></div>
 
             <div class="grid-100 row">
@@ -48,7 +48,8 @@
                 </div>
             </div> <div class="clear"></div>
 
-            <div class="grid-100 row">
+            <div class="grid-100 row"
+                 th:if="${#strings.isEmpty(recipe.description) == false}">
                 <div class="grid-20">
                     <p>
                         <label> Description </label>

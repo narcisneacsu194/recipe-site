@@ -4,6 +4,7 @@ import com.company.recipes.model.Recipe;
 import com.company.recipes.model.User;
 import com.company.recipes.services.RecipeService;
 import com.company.recipes.services.UserService;
+import com.company.recipes.utilities.UtilityMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,15 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
+
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserController(RecipeService recipeService, UserService userService) {
+        this.recipeService = recipeService;
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
     public String userProfile(Model model, Principal principal){
@@ -38,22 +43,8 @@ public class UserController {
         model.addAttribute("recipes", ownedRecipes);
         model.addAttribute("favoredRecipes", favoredRecipes);
         model.addAttribute("nullAndNonNullUserFavoriteRecipeList",
-                nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
-        nullAndNonNullUserFavoriteRecipeList(ownedRecipes, actualUser.getFavoritedRecipes());
+                UtilityMethods.nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
+        UtilityMethods.nullAndNonNullUserFavoriteRecipeList(ownedRecipes, actualUser.getFavoritedRecipes());
         return "user/profile";
     }
-
-    private List<Recipe> nullAndNonNullUserFavoriteRecipeList(List<Recipe> recipes, List<Recipe> favorites){
-        List<Recipe> nullAndNonNullUserFavoriteRecipeList = new ArrayList<>();
-        recipes.forEach(recipe -> {
-            if (favorites.contains(recipe)) {
-                nullAndNonNullUserFavoriteRecipeList.add(recipe);
-            } else {
-                nullAndNonNullUserFavoriteRecipeList.add(null);
-            }
-        });
-
-        return nullAndNonNullUserFavoriteRecipeList;
-    }
-
 }

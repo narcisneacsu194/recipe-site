@@ -237,8 +237,11 @@ $("#remove-ingredient-button").click(function(){
 
     var lastIngredientRow = $(".ingredient-row").last();
     var len = $(".ingredient-row").length;
-    if(len > 1)
-    lastIngredientRow.remove();
+    if(len > 1){
+        $(".ingredient-row").val('');
+        lastIngredientRow.remove();
+    }
+
 });
 
 

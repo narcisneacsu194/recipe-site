@@ -1,5 +1,7 @@
 package com.company.recipes.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -13,7 +15,8 @@ import java.util.List;
 public class Recipe extends BaseEntity{
 
     @NotNull
-    @Size(min = 2, max = 100)
+    @Column(unique = true)
+    @Size(min = 2, max = 50)
     private String name;
 
     @Size(max = 1000)
@@ -22,12 +25,14 @@ public class Recipe extends BaseEntity{
     @NotNull
     private Category category;
 
+    @Min(value = 1)
     private Integer prepTimeHour;
 
     @Min(value = 2)
     @Max(value = 59)
     private Integer prepTimeMinute;
 
+    @Min(value = 1)
     private Integer cookTimeHour;
 
     @Min(value = 2)
@@ -35,10 +40,12 @@ public class Recipe extends BaseEntity{
     private Integer cookTimeMinute;
 
     @Valid
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
 
     @Valid
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps;
 

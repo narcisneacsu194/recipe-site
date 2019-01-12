@@ -19,11 +19,15 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final RoleService roleService;
 
     @Autowired
-    private RoleService roleService;
+    public LoginController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String loginForm(Model model, HttpServletRequest request){

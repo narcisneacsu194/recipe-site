@@ -10,8 +10,10 @@ import javax.validation.constraints.Size;
 public class Ingredient extends BaseEntity{
 
     @NotNull
-    @Size(min = 2)
+    @Size(min = 2, max = 1000)
     private String description;
+
+    private String error;
 
     @ManyToOne
     private Recipe recipe;
@@ -39,5 +41,13 @@ public class Ingredient extends BaseEntity{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

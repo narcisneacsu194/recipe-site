@@ -46,7 +46,7 @@ public class User implements UserDetails{
     @JsonIgnore
     private Role role;
 
-    @ManyToMany(targetEntity = Recipe.class)
+    @ManyToMany(targetEntity = Recipe.class, fetch = FetchType.EAGER)
     @JoinTable(name = "users_favorite_recipes",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name = "recipe_id"))

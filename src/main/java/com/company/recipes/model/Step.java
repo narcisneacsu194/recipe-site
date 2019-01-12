@@ -12,6 +12,8 @@ public class Step extends BaseEntity{
     @Size(min = 2, max = 1000)
     private String description;
 
+    private String error;
+
     @ManyToOne
     private Recipe recipe;
 
@@ -38,5 +40,13 @@ public class Step extends BaseEntity{
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }
