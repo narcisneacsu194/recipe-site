@@ -22,14 +22,14 @@
                                     th:value="${category}"
                                     th:text="${category.name}"></option>
                         </select>
-                        <button>Search</button>
+                        <button><i class="fas fa-search"></i> Search</button>
                     </form>
                 </div>
                 <div class="grid-40">
                     <form th:action="@{/search-by-description-containing}" method="get" th:object="${recipe}">
                         <input th:field="*{description}" th:placeholder="${description}" th:if="${description != null and #strings.length(description) > 0}"/>
                         <input th:field="*{description}" placeholder="Search recipes by description..." th:if="${description == null or #strings.length(description) == 0}" />
-                        <button>Search</button>
+                        <button><i class="fas fa-search"></i> Search</button>
                     </form>
                 </div>
                 <div class="grid-30">
@@ -53,7 +53,7 @@
 
             <div class="clear"></div>
 
-            <div class="row">&nbsp;</div>
+            <div th:replace="layout :: footer-nav"></div>
 
         </div>
     </div>

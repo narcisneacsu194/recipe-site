@@ -7,6 +7,7 @@
         <title>Narcis Chef</title>
 
         <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"/>
         <link rel="stylesheet" th:href="@{/css/unsemantic-grid-responsive.css}"/>
         <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     </head>
@@ -58,10 +59,20 @@
                     <p>
                         <a th:href="@{|/recipes/${recipe.id}/edit|}"> <img th:src="@{/images/edit.svg}" height="12px"/> Edit </a>
                     <form th:action="@{|/recipes/${recipe.id}/delete|}" method="post" id="recipeDeleteForm">
-                        <button type="submit">Delete</button>
+                        <button type="submit"><i class="far fa-trash-alt"></i> Delete</button>
                     </form>
                     </p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-100 row controls" th:fragment="footer-nav">
+        <div class="grid-50">
+            <div style="padding: 15px 0px;">
+                Links:
+                <a th:href="@{/}" class="bottom-nav-link"><i class="fas fa-home"></i>Home</a>
+                <a th:href="@{/user/profile}" class="bottom-nav-link"><i class="fas fa-user"></i>Profile</a>
             </div>
         </div>
     </div>

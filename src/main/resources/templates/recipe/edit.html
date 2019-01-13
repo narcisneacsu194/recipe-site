@@ -256,11 +256,13 @@
                 <div class="grid-100 row controls">
                     <div class="grid-50" id="divElement">
                         <div>
-                            <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();"><button>Save Recipe</button></a>
-                            <a th:href="@{/}">Cancel</a>
+                            <a th:href="@{/}" class="bottom-nav-link" style="color: black;"><i class="fas fa-undo"></i> Cancel</a>
+                            <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();" class="bottom-nav-link"><button><i class="far fa-save"></i> Save Recipe</button></a>
                         </div>
                     </div>
                 </div>
+
+                <div th:replace="layout :: footer-nav"></div>
             </form>
         </div> <!-- recipes -->
 

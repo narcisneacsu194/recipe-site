@@ -55,7 +55,7 @@
                         <label> Description </label>
                     </p>
                 </div>
-                <div class="grid-80">
+                <div class="grid-80 row-wrap">
                     <p th:text="${recipe.description}">
                         Yummmy dessert toast covered in egg wash and topped with nutella and seasonal fruit.
                     </p>
@@ -125,7 +125,7 @@
                     </p>
                 </div>
 
-                <div class="ingredient-row" th:each="ingredient : ${ingredients}">
+                <div class="ingredient-row row-wrap" th:each="ingredient : ${ingredients}">
                     <div class="prefix-20 grid-80">
                         <p th:text="${ingredient.description}">
                             Eggs
@@ -147,7 +147,7 @@
                     </p>
                 </div>
 
-                <div class="step-row" th:each="step, iterStat : ${steps}">
+                <div class="step-row row-wrap" th:each="step, iterStat : ${steps}">
                     <div class="prefix-20 grid-80">
                         <p th:text="${iterStat.count + ') ' + step.description}">
                             1. Crack your eggs and beat them.
@@ -157,7 +157,7 @@
 
             </div> <div class="clear"></div>
 
-            <div class="row">&nbsp;</div>
+            <div th:replace="layout :: footer-nav"></div>
 
         </div> <!-- recipes -->
     </div> <!-- grid-100 -->
