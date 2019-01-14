@@ -105,7 +105,13 @@ button {
   opacity: 1; }
 
 .flush-right {
-  float: right; }
+  float: right;
+}
+
+.flush-right-alt{
+  float: right;
+  margin-top: -40px !important;
+}
 
 /*# sourceMappingURL=styles.css.map */
 
@@ -120,7 +126,6 @@ button {
 }
 
 .flash {
-	margin-top: 2rem;
 	margin-bottom: 2rem;
 	padding: 1rem 2rem;
 	border-radius: 4px;
@@ -146,9 +151,8 @@ button {
   max-height: 100%;
 }
 
-#divElement{
-  position: relative;
-  left: 30%;
+#detail-page-buttons{
+  text-align: center;
 }
 
 .row-wrap{
@@ -169,4 +173,8 @@ button {
 .bottom-nav-link{
   color: #0e4485;
   padding: 15px;
+}
+
+.nav-cls{
+  margin-bottom: 50px;
 }

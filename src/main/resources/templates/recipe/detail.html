@@ -15,20 +15,16 @@
         <div class="recipes">
 
             <div class="grid-100 row controls">
-                <div class="grid-90">
-                    <h2 th:text="${recipe.name}"> Brioche French Toast with Nutella </h2>
-                </div>
-                <div class="grid-10">
-                    <h2 class="flush-right">
-                        <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" method="post">
+                <h2 th:text="${recipe.name}" class="title-title"> Brioche French Toast with Nutella </h2>
+                <h2 class="flush-right-alt">
+                    <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" method="post">
 
-                        </form>
-                        <a href="javascript:;" onclick="document.getElementById('favoriteForm').submit();">
-                            <img th:src="@{/images/favorite.svg}" height="16px" th:if="${favoredByUser == false}"/>
-                            <img th:src="@{/images/favorited.svg}" height="16px" th:if="${favoredByUser}"/>
-                        </a>
-                    </h2>
-                </div>
+                    </form>
+                    <a href="javascript:;" onclick="document.getElementById('favoriteForm').submit();">
+                        <img th:src="@{/images/favorite.svg}" height="16px" th:if="${favoredByUser == false}"/>
+                        <img th:src="@{/images/favorited.svg}" height="16px" th:if="${favoredByUser}"/>
+                    </a>
+                </h2>
             </div> <div class="clear"></div>
 
             <div class="grid-100 row" id="recipe-image-div">

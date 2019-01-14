@@ -65,7 +65,7 @@
                 </div>
                 <div class="grid-40">
                     <p>
-                        <textarea th:value="${recipe.description}" th:field="*{description}" placeholder="description..."> </textarea>
+                        <textarea th:value="${recipe.description}" th:field="*{description}" rows="4" placeholder="description..."> </textarea>
                     </p>
                     <p th:if="${descriptionError}" class="error-text" th:text="${descriptionError}">
                         Description Error.
@@ -99,9 +99,6 @@
                     <p class="label-spacing">
                         <label> Prep Time </label>
                     </p>
-                    <p th:if="${prepTimeError != null}" th:text="${prepTimeError}" class="error-text">
-                        Prep Time Error.
-                    </p>
                 </div>
                 <div class="grid-20">
                     <p>
@@ -118,6 +115,9 @@
                     <p th:if="${prepTimeMinuteError != null}" th:text="${prepTimeMinuteError}" class="error-text">
                         Prep Time Minute Error.
                     </p>
+                    <p th:if="${prepTimeError != null}" th:text="${prepTimeError}" class="error-text">
+                        Prep Time Error.
+                    </p>
                 </div>
 
             </div> <div class="clear"></div>
@@ -126,9 +126,6 @@
                 <div class="grid-20">
                     <p class="label-spacing">
                         <label> Cook Time </label>
-                    </p>
-                    <p th:if="${cookTimeError != null}" th:text="${cookTimeError}" class="error-text">
-                        Cook Time Error.
                     </p>
                 </div>
                 <div class="grid-20">
@@ -145,6 +142,9 @@
                     </p>
                     <p th:if="${cookTimeMinuteError != null}" th:text="${cookTimeMinuteError}" class="error-text">
                         Cook Time Minute Error.
+                    </p>
+                    <p th:if="${cookTimeError != null}" th:text="${cookTimeError}" class="error-text">
+                        Cook Time Error.
                     </p>
                 </div>
             </div> <div class="clear"></div>
@@ -174,7 +174,7 @@
                     <input type="hidden"
                             th:field="*{ingredients[__${ingredientStat.index}__].id}"/>
 
-                    <div class="prefix-20 grid-80">
+                    <div class="prefix-20 grid-50">
                         <p>
                             <input th:field="*{ingredients[__${ingredientStat.index}__].description}" placeholder="description..."/>
                         </p>
@@ -186,17 +186,18 @@
                     </div>
                 </div>
 
-                <div class="prefix-20 grid-30 add-row">
+                <div class="prefix-20 grid-50 add-row">
                     <p>
                         <button id="add-another-ingredient-button">+ Add Ingredient</button>
-                    </p>
-                </div>
-
-                <div class="grid-30">
-                    <p>
                         <button id="remove-ingredient-button">- Remove Ingredient</button>
                     </p>
                 </div>
+
+                <!--<div class="grid-30">-->
+                    <!--<p>-->
+                        <!--<button id="remove-ingredient-button">- Remove Ingredient</button>-->
+                    <!--</p>-->
+                <!--</div>-->
 
             </div> <div class="clear"></div>
 
@@ -224,7 +225,7 @@
 
                     <input type="hidden" th:field="*{steps[__${stepStat.index}__].id}"/>
 
-                    <div class="prefix-20 grid-80">
+                    <div class="prefix-20 grid-60">
                         <p>
                             <textarea th:field="*{steps[__${stepStat.index}__].description}" placeholder="description..."></textarea>
                         </p>
@@ -236,30 +237,19 @@
                     </div>
                 </div>
 
-                <!---->
-                <div class="prefix-20 grid-30 add-row">
+
+                <div class="prefix-20 grid-40 add-row">
                     <p>
                         <button id="add-another-step-button">+ Add Step</button>
-                    </p>
-                </div>
-
-                <div class="grid-30">
-                    <p>
                         <button id="remove-step-button">- Remove Step</button>
                     </p>
                 </div>
 
             </div> <div class="clear"></div>
 
-            <!--<div class="row">&nbsp;</div>-->
-
-                <div class="grid-100 row controls">
-                    <div class="grid-50" id="divElement">
-                        <div>
-                            <a th:href="@{/}" class="bottom-nav-link" style="color: black;"><i class="fas fa-undo"></i> Cancel</a>
-                            <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();" class="bottom-nav-link"><button><i class="far fa-save"></i> Save Recipe</button></a>
-                        </div>
-                    </div>
+                <div class="grid-100 row controls" id="detail-page-buttons">
+                    <a th:href="@{/}" class="bottom-nav-link" style="color: black;"><i class="fas fa-undo"></i> Cancel</a>
+                    <a href="javascript:;" onclick="document.getElementById('saveRecipeForm').submit();" class="bottom-nav-link"><button><i class="far fa-save"></i> Save Recipe</button></a>
                 </div>
 
                 <div th:replace="layout :: footer-nav"></div>

@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.net.URL;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -165,8 +164,8 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/search-by-description-containing", method = RequestMethod.GET)
-    public String searchByDescriptionContaining(Recipe recipe, Model model, RedirectAttributes redirectAttributes, Principal principal){
-        List<Recipe> recipes = recipeService.findByDescriptionContaining(recipe.getDescription());
+    public String searchByDescriptionContaining(Recipe recipe, RedirectAttributes redirectAttributes, Principal principal){
+        List<Recipe> recipes = recipeService.findByDescriptionContaining(recipe.getDescription().trim());
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
         redirectAttributes.addFlashAttribute("recipes", recipes);
@@ -177,12 +176,16 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/search-by-category", method = RequestMethod.GET)
-    public String searchByCategory(Recipe recipe, Model model, RedirectAttributes redirectAttributes, Principal principal){
-        List<Recipe> recipes = new ArrayList<>();
+    public String searchByCategory(Recipe recipe, RedirectAttributes redirectAttributes, Principal principal){
+        List<Recipe> recipes;
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
         if(recipe.getCategory() != null){
             recipes = recipeService.findByCategory(recipe.getCategory().getName());
+            redirectAttributes.addFlashAttribute("nullAndNonNullUserFavoriteRecipeList",
+                    UtilityMethods.nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
+        }else{
+            recipes = recipeService.findAll();
             redirectAttributes.addFlashAttribute("nullAndNonNullUserFavoriteRecipeList",
                     UtilityMethods.nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
         }

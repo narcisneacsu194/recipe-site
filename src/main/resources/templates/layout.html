@@ -12,7 +12,7 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     </head>
     <body>
-    <nav th:fragment="nav">
+    <nav th:fragment="nav" class="nav-cls">
         <a th:href="@{|/user/profile|}" sec:authentication="name">
             Chandra S.
         </a>
@@ -22,16 +22,11 @@
         </form>
     </nav>
 
-    <div class="grid-container">
-        <div class="grid-100" th:fragment="logo">
-            <a th:href="@{/}">
-                <h1>
-                    <img th:src="@{/images/chef.png}" height="120px"/>
-                    <br/>
-                </h1>
+        <div class="grid-100 logo-grid" th:fragment="logo">
+            <a th:href="@{/}" class="grid-link">
+                <img th:src="@{/images/chef.png}" height="120px"/>
             </a>
         </div>
-    </div>
 
     <div  th:fragment="flash" th:if="${flash != null}" class="container">
         <div th:classappend="${#strings.toLowerCase(flash.status)}"
