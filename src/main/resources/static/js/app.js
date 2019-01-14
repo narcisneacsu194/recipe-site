@@ -65,7 +65,7 @@ $("#add-another-step-button").click(function () {
         "<div class='step-row'>" +
             "<input type='hidden' id='" + newHiddenInputId + "' name='" +
                 newHiddenInputName + "'>" +
-            "<div class='prefix-20 grid-80'>" +
+            "<div class='prefix-20 grid-60'>" +
                 "<p>" +
                      "<textarea id='" + newStepInputId + "' " +
                      "name='" + newStepInputName + "' " +
@@ -216,7 +216,7 @@ $("#add-another-ingredient-button").click(function () {
             "<div class='ingredient-row'>" +
                 "<input type='hidden' id='" + newHiddenInputId + "' name='" +
                     newHiddenInputName + "'>" +
-                "<div class='prefix-20 grid-80'>" +
+                "<div class='prefix-20 grid-50'>" +
                     "<p>" +
                         "<input id='" + newIngredientDescriptionInputIdField + "' " +
                         "name='" + newIngredientDescriptionInputNameField + "' " +

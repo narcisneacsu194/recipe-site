@@ -34,7 +34,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
     compile 'org.apache.tomcat:tomcat-dbcp:7.0.65'
-    compile 'com.h2database:h2'
+//    compile 'com.h2database:h2'
+    compile 'mysql:mysql-connector-java'
     compile 'org.springframework.data:spring-data-rest-hal-browser'
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testCompile 'org.springframework.boot:spring-boot-starter-test'

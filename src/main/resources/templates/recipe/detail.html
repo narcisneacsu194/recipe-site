@@ -16,6 +16,7 @@
 
             <div class="grid-100 row controls">
                 <h2 th:text="${recipe.name}" class="title-title"> Brioche French Toast with Nutella </h2>
+                <i th:text="${'Author: ' + recipe.user.username}"></i>
                 <h2 class="flush-right-alt">
                     <form th:action="@{|/recipes/${recipe.id}/detail/add-to-favorites|}" id="favoriteForm" method="post">
 

@@ -23,6 +23,10 @@
 
             <div th:replace="layout :: recipe-list"></div>
 
+            <div th:if="${#lists.isEmpty(recipes)}" class="grid-100 row" style="padding: 15px;">
+                <i>You don't own any recipes.</i>
+            </div>
+
             <div class="grid-100 row controls">
                 <div class="grid-100">
                     <h3>Favored recipes</h3>
@@ -40,6 +44,10 @@
                         </p>
                     </div>
                 </a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(favoredRecipes)}" class="grid-100 row" style="padding: 15px;">
+                <i>You have no favored recipes.</i>
             </div>
 
             <div th:replace="layout :: footer-nav"></div>

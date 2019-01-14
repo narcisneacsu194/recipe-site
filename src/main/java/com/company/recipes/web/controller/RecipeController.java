@@ -105,6 +105,7 @@ public class RecipeController {
         Recipe recipe = recipeService.findOne(recipeId);
         User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
+
         if(!recipe.getFavoriteUsers().contains(actualUser)){
             model.addAttribute("favoredByUser", false);
         }else{
