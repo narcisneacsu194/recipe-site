@@ -1,6 +1,7 @@
 package com.company.recipes.services;
 
 import com.company.recipes.dao.RecipeDao;
+import com.company.recipes.enums.Category;
 import com.company.recipes.model.Recipe;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public List<Recipe> findByCategory(String categoryName) {
-        List<Recipe> recipes = recipeDao.findByCategory(Recipe.Category.valueOf(categoryName.toUpperCase()));
+        List<Recipe> recipes = recipeDao.findByCategory(Category.valueOf(categoryName.toUpperCase()));
         for(Recipe recipe : recipes){
             Hibernate.initialize(recipe.getFavoriteUsers());
         }

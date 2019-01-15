@@ -52,6 +52,7 @@ public class User implements UserDetails{
             inverseJoinColumns = @JoinColumn(name = "recipe_id"))
     private List<Recipe> favoritedRecipes = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Recipe> ownedRecipes = new ArrayList<>();
 

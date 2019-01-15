@@ -1,6 +1,6 @@
 //package com.company.recipes.dao;
 //
-//import com.company.recipes.model.Recipe;
+//import com.company.recipes.model.RecipePojo;
 //import org.junit.Assert;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -26,28 +26,28 @@
 //
 //    @Test
 //    public void findOne_ShouldReturnNull() throws Exception{
-//        Assert.assertThat(dao.findOne(101L), nullValue(Recipe.class));
+//        Assert.assertThat(dao.findOne(101L), nullValue(RecipePojo.class));
 //    }
 //
 //    @Test
 //    public void save_ShouldPersistEntity() throws Exception{
-//        Recipe recipe = new Recipe("Recipe 1", "Description 1",
-//                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
+//        RecipePojo recipe = new RecipePojo("RecipePojo 1", "Description 1",
+//                RecipePojo.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
 //        dao.save(recipe);
-//        Assert.assertThat(dao.findOne(recipe.getId()), notNullValue(Recipe.class));
+//        Assert.assertThat(dao.findOne(recipe.getId()), notNullValue(RecipePojo.class));
 //    }
 //
 //    @Test
 //    public void save_ShouldPersistMultipleEntities() throws Exception{
-//        List<Recipe> recipes = new ArrayList<>();
-//        Recipe recipe = new Recipe("Recipe 1", "Description 1",
-//                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
+//        List<RecipePojo> recipes = new ArrayList<>();
+//        RecipePojo recipe = new RecipePojo("RecipePojo 1", "Description 1",
+//                RecipePojo.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
 //        recipes.add(recipe);
-//        Recipe recipe2 = new Recipe("Recipe 2", "Description 2",
-//                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
+//        RecipePojo recipe2 = new RecipePojo("RecipePojo 2", "Description 2",
+//                RecipePojo.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
 //        recipes.add(recipe2);
-//        Recipe recipe3 = new Recipe("Recipe 3", "Description 3",
-//                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
+//        RecipePojo recipe3 = new RecipePojo("RecipePojo 3", "Description 3",
+//                RecipePojo.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
 //        recipes.add(recipe3);
 //
 //        dao.save(recipes);
@@ -57,12 +57,12 @@
 //
 //    @Test
 //    public void delete_ShouldDeleteEntity() throws Exception{
-//        Recipe recipe = new Recipe("Recipe 1", "Description 1",
-//                Recipe.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
+//        RecipePojo recipe = new RecipePojo("RecipePojo 1", "Description 1",
+//                RecipePojo.Category.BREAKFAST, 23, 32, "http://placehold.it/350x150");
 //        dao.save(recipe);
 //        Long recipeId = recipe.getId();
 //        dao.delete(recipe);
-//        Assert.assertThat(dao.findOne(recipeId), nullValue(Recipe.class));
+//        Assert.assertThat(dao.findOne(recipeId), nullValue(RecipePojo.class));
 //    }
 //
 //}

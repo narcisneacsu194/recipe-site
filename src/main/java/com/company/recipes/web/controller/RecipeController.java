@@ -1,5 +1,6 @@
 package com.company.recipes.web.controller;
 
+import com.company.recipes.enums.Category;
 import com.company.recipes.model.Ingredient;
 import com.company.recipes.model.Recipe;
 import com.company.recipes.model.Step;
@@ -61,7 +62,7 @@ public class RecipeController {
             model.addAttribute("recipe", new Recipe());
         }
 
-        model.addAttribute("categories", Recipe.Category.values());
+        model.addAttribute("categories", Category.values());
         model.addAttribute("username", user.getUsername());
         return "recipe/index";
     }
@@ -72,7 +73,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredients", recipe.getIngredients());
         model.addAttribute("steps", recipe.getSteps());
-        model.addAttribute("categories", Recipe.Category.values());
+        Model categories = model.addAttribute("categories", Category.values());
         model.addAttribute("action", "recipes/edit-recipe");
         return "recipe/edit";
     }
@@ -122,7 +123,7 @@ public class RecipeController {
         if(!model.containsAttribute("recipe")) {
             model.addAttribute("recipe", new Recipe());
         }
-        model.addAttribute("categories", Recipe.Category.values());
+        model.addAttribute("categories", Category.values());
         model.addAttribute("action", "recipes/add-recipe");
         return "recipe/edit";
     }

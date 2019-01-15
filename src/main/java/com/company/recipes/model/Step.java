@@ -1,5 +1,7 @@
 package com.company.recipes.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,7 @@ public class Step extends BaseEntity{
 
     private String error;
 
+    @JsonManagedReference
     @ManyToOne
     private Recipe recipe;
 

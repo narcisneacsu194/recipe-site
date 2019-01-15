@@ -1,6 +1,11 @@
 package com.company.recipes.model;
 
+import com.company.recipes.enums.Category;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -41,6 +46,7 @@ public class Recipe extends BaseEntity{
 
     @Valid
     @Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
 
@@ -192,22 +198,5 @@ public class Recipe extends BaseEntity{
 
     public void setCookTimeMinute(Integer cookTimeMinute) {
         this.cookTimeMinute = cookTimeMinute;
-    }
-
-    public enum Category{
-        BREAKFAST("Breakfast"),
-        LUNCH("Lunch"),
-        DINNER("Dinner"),
-        DESSERT("Dessert");
-
-        private String name;
-
-        Category(String name){
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 }

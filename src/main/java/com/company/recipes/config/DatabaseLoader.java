@@ -1,6 +1,7 @@
 package com.company.recipes.config;
 
 import com.company.recipes.dao.*;
+import com.company.recipes.enums.Category;
 import com.company.recipes.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -38,27 +39,27 @@ public class DatabaseLoader implements ApplicationRunner{
         userDao.save(user);
         userDao.save(user2);
 
-//        Recipe.Category recipeCategory = Recipe.Category.BREAKFAST;
+//        RecipePojo.Category recipeCategory = RecipePojo.Category.BREAKFAST;
 //
-//        Recipe recipe = new Recipe("Name " + value, "Description " + value, recipeCategory,
+//        RecipePojo recipe = new RecipePojo("Name " + value, "Description " + value, recipeCategory,
 //                    value, value, "http://placehold.it/" + value + "/350x150");
 
         IntStream.range(1, 7).forEach(value -> {
-            Recipe.Category recipeCategory = Recipe.Category.BREAKFAST;
+            Category recipeCategory = Category.BREAKFAST;
             Random random = new Random();
             int randomNum = random.nextInt(4);
             switch(randomNum){
                 case 0:
-                    recipeCategory = Recipe.Category.BREAKFAST;
+                    recipeCategory = Category.BREAKFAST;
                     break;
                 case 1:
-                    recipeCategory = Recipe.Category.LUNCH;
+                    recipeCategory = Category.LUNCH;
                     break;
                 case 2:
-                    recipeCategory = Recipe.Category.DINNER;
+                    recipeCategory = Category.DINNER;
                     break;
                 case 3:
-                    recipeCategory = Recipe.Category.DESSERT;
+                    recipeCategory = Category.DESSERT;
                     break;
             }
             Recipe recipe = new Recipe("Name " + value, "Description " + value, recipeCategory,

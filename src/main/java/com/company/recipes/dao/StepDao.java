@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StepDao extends PagingAndSortingRepository<Step, Long> {
+public interface StepDao extends CrudRepository<Step, Long> {
     @Query("select s from Step s")
     List<Step> findAll();
 

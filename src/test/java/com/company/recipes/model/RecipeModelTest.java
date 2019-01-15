@@ -1,5 +1,6 @@
 package com.company.recipes.model;
 
+import com.company.recipes.enums.Category;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,8 +28,8 @@ public class RecipeModelTest {
 
     @Test
     public void setCategory_ShouldSetCategoryForRecipe() throws Exception{
-        recipe.setCategory(Recipe.Category.BREAKFAST);
-        Assert.assertEquals(Recipe.Category.BREAKFAST, recipe.getCategory());
+        recipe.setCategory(Category.BREAKFAST);
+        Assert.assertEquals(Category.BREAKFAST, recipe.getCategory());
     }
 
 //    @Test

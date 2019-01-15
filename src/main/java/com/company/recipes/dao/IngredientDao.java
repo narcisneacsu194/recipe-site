@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IngredientDao extends PagingAndSortingRepository<Ingredient, Long> {
+public interface IngredientDao extends CrudRepository<Ingredient, Long> {
     @Query("select i from Ingredient i")
     List<Ingredient> findAll();
 
