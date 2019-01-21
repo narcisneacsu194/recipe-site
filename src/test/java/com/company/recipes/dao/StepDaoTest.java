@@ -1,6 +1,7 @@
 package com.company.recipes.dao;
 
 import com.company.recipes.model.Step;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,46 +15,57 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-                properties = "spring.datasource.url = jdbc:h2:./database/test-StepDaoTest-steps;DB_CLOSE_ON_EXIT=FALSE")
+                properties = "spring.datasource.url = jdbc:mysql://localhost:3306/test_StepDaoTest_steps")
 public class StepDaoTest {
     @Autowired
     private StepDao dao;
 
-    @Test
-    public void findAll_ShouldReturn694Steps() throws Exception{
-        Assert.assertThat(dao.findAll(), hasSize(694));
+    @After
+    public void deleteNewSteps(){
+        List<Step> steps = dao.findAll();
+
+        steps.forEach(step -> {
+            if(step.getDescription().startsWith("New")){
+                dao.delete(step.getId());
+            }
+        });
     }
 
     @Test
-    public void findOne_ShouldReturnNull() throws Exception{
-        Assert.assertThat(dao.findOne(695L), nullValue(Step.class));
+    public void findAll_ShouldReturn30Steps(){
+        Assert.assertThat(dao.findAll(), hasSize(30));
     }
 
     @Test
-    public void save_ShouldPersistEntity() throws Exception{
-        Step step = new Step("Description 1");
+    public void findOne_ShouldReturnNull(){
+        Assert.assertThat(dao.findOne(31L), nullValue(Step.class));
+    }
+
+    @Test
+    public void save_ShouldPersistEntity(){
+        Step step = new Step("New Step 1");
         dao.save(step);
         Assert.assertThat(dao.findOne(step.getId()), notNullValue(Step.class));
     }
 
     @Test
-    public void save_ShouldPersistMultipleEntities() throws Exception{
+    public void save_ShouldPersistMultipleEntities(){
         List<Step> steps = new ArrayList<>();
-        Step step = new Step("Description 1");
+        Step step = new Step("New Step 1");
         steps.add(step);
-        Step step2 = new Step("Description 2");
+        Step step2 = new Step("New Step 2");
         steps.add(step2);
-        Step step3 = new Step("Description 3");
+        Step step3 = new Step("New Step 3");
         steps.add(step3);
 
         dao.save(steps);
 
-        Assert.assertThat(dao.findAll(), hasSize(697));
+        Assert.assertThat(dao.findAll(), hasSize(33));
     }
 
     @Test
-    public void delete_ShouldDeleteEntity() throws Exception{
-        Step step = new Step("Description 1");
+    public void delete_ShouldDeleteEntity(){
+        Step step = new Step("New Step 1");
         dao.save(step);
         Long stepId = step.getId();
         dao.delete(step);
