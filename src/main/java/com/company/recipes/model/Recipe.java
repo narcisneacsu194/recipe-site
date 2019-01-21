@@ -46,7 +46,6 @@ public class Recipe extends BaseEntity{
 
     @Valid
     @Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
 

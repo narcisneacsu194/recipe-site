@@ -16,7 +16,6 @@ public class Step extends BaseEntity{
 
     private String error;
 
-    @JsonManagedReference
     @ManyToOne
     private Recipe recipe;
 

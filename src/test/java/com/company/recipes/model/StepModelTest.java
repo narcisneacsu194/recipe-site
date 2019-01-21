@@ -13,8 +13,14 @@ public class StepModelTest {
     }
 
     @Test
-    public void setDescription_ShouldSetDescriptionForStep() throws Exception{
+    public void setDescription_ShouldSetDescriptionForStep(){
         step.setDescription("Description 1");
         Assert.assertEquals("Description 1", step.getDescription());
+    }
+
+    @Test
+    public void setError_ShouldSetErrorForStep(){
+        step.setError("Error 1");
+        Assert.assertEquals("Error 1", step.getError());
     }
 }

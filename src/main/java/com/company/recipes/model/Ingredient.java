@@ -17,7 +17,6 @@ public class Ingredient extends BaseEntity{
 
     private String error;
 
-    @JsonManagedReference
     @ManyToOne
     private Recipe recipe;
 

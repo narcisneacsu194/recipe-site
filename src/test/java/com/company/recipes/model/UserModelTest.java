@@ -12,31 +12,31 @@ public class UserModelTest {
     }
 
     @Test
-    public void setId_ShouldSetIdForUser() throws Exception{
+    public void setId_ShouldSetIdForUser(){
         user.setId(1L);
         Assert.assertEquals((Long)1L, user.getId());
     }
 
     @Test
-    public void setUsername_ShouldSetUsernameForUser() throws Exception{
+    public void setUsername_ShouldSetUsernameForUser(){
         user.setUsername("username 1");
         Assert.assertEquals("username 1", user.getUsername());
     }
 
     @Test
-    public void setPassword_ShouldSetPasswordForUser() throws Exception{
+    public void setPassword_ShouldSetPasswordForUser(){
         user.setPassword("password 1");
         Assert.assertEquals("password 1", user.getPassword());
     }
 
     @Test
-    public void setMatchingPassword_ShouldSetMatchingPasswordForUser() throws Exception{
+    public void setMatchingPassword_ShouldSetMatchingPasswordForUser(){
         user.setMatchingPassword("matching password 1");
         Assert.assertEquals("matching password 1", user.getMatchingPassword());
     }
 
     @Test
-    public void encryptPasswords_shouldEncryptMainPasswordVariable() throws Exception{
+    public void encryptPasswords_shouldEncryptMainPasswordVariable(){
         user.setPassword("password");
         user.setMatchingPassword("password");
         user.encryptPasswords();
@@ -44,7 +44,7 @@ public class UserModelTest {
     }
 
     @Test
-    public void encryptPasswords_shouldEncryptMatchingPasswordVariable() throws Exception{
+    public void encryptPasswords_shouldEncryptMatchingPasswordVariable(){
         user.setPassword("password");
         user.setMatchingPassword("password");
         user.encryptPasswords();
@@ -52,24 +52,24 @@ public class UserModelTest {
     }
 
     @Test
-    public void setEnabled_ShouldSetAvailabilityForUser() throws Exception{
+    public void setEnabled_ShouldSetAvailabilityForUser(){
         user.setEnabled(true);
-        Assert.assertEquals(true, user.isEnabled());
+        Assert.assertTrue(user.isEnabled());
     }
 
     @Test
-    public void isAccountNonExpired_ShouldReturnTrue() throws Exception{
-        Assert.assertEquals(true, user.isAccountNonExpired());
+    public void isAccountNonExpired_ShouldReturnTrue(){
+        Assert.assertTrue(user.isAccountNonExpired());
     }
 
     @Test
-    public void isAccountNonLocked_ShouldReturnTrue() throws Exception{
-        Assert.assertEquals(true, user.isAccountNonLocked());
+    public void isAccountNonLocked_ShouldReturnTrue(){
+        Assert.assertTrue(user.isAccountNonLocked());
     }
 
     @Test
-    public void isCredentialsNonExpired_ShouldReturnTrue() throws Exception{
-        Assert.assertEquals(true, user.isCredentialsNonExpired());
+    public void isCredentialsNonExpired_ShouldReturnTrue(){
+        Assert.assertTrue(user.isCredentialsNonExpired());
     }
 
 }
