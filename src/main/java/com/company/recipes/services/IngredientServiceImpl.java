@@ -16,7 +16,7 @@ public class IngredientServiceImpl implements IngredientService{
     @Override
     @SuppressWarnings("unchecked")
     public List<Ingredient> findAll() {
-        return (List)ingredientDao.findAll();
+        return ingredientDao.findAll();
     }
 
     @Override

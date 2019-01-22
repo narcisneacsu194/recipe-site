@@ -1,11 +1,7 @@
 package com.company.recipes.model;
 
 import com.company.recipes.enums.Category;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -68,13 +64,11 @@ public class Recipe extends BaseEntity{
     private String photoUrl;
 
     public Recipe(){
-        super();
     }
 
     public Recipe(String name, String description, Category category,
                   Integer prepTimeHour, Integer prepTimeMinute,
                   Integer cookTimeHour, Integer cookTimeMinute, String photoUrl){
-        this();
         this.name = name;
         this.description = description;
         this.category = category;

@@ -16,7 +16,7 @@ public class StepServiceImpl implements StepService{
     @Override
     @SuppressWarnings("unchecked")
     public List<Step> findAll() {
-        return (List)stepDao.findAll();
+        return stepDao.findAll();
     }
 
     @Override

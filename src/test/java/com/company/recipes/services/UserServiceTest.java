@@ -22,10 +22,10 @@ public class UserServiceTest {
     private UserService userService = new UserServiceImpl();
 
     @Test
-    public void findAll_ShouldReturnTwo() throws Exception{
+    public void findAll_ShouldReturnTwo(){
         List<User> users = Arrays.asList(
-                new User("username1", true, "password1", "password1"),
-                new User("username2", true, "password2", "password2")
+                new User("NewUser1", true, "password1", "password1"),
+                new User("NewUser2", true, "password2", "password2")
         );
 
         when(userDao.findAll()).thenReturn(users);
@@ -33,16 +33,16 @@ public class UserServiceTest {
         Assert.assertEquals("findAll should return two users", 2,
                 userService.findAll().size());
 
-        verify(userDao).findAll();
+        verify(userDao, times(1)).findAll();
     }
 
     @Test
-    public void findOne_ShouldReturnOne() throws Exception{
-        User user = new User("username1", true, "password1", "password1");
+    public void findOne_ShouldReturnOne(){
+        User user = new User("NewUser1", true, "password1", "password1");
         when(userDao.findByUsername(user.getUsername())).thenReturn(user);
 
         Assert.assertThat(userService.findByUsername(user.getUsername()), instanceOf(User.class));
 
-        verify(userDao).findByUsername(user.getUsername());
+        verify(userDao, times(1)).findByUsername(user.getUsername());
     }
 }

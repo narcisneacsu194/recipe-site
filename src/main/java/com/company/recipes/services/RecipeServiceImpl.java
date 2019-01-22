@@ -17,7 +17,7 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     @SuppressWarnings("unchecked")
     public List<Recipe> findAll() {
-        return (List)recipeDao.findAll();
+        return recipeDao.findAll();
     }
 
     @Override
