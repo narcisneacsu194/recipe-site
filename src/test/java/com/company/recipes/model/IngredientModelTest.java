@@ -24,4 +24,12 @@ public class IngredientModelTest {
         ingredient.setError("Error 1");
         Assert.assertEquals("Error 1", ingredient.getError());
     }
+
+    @Test
+    public void setRecipe_ShouldSetRecipeForIngredient(){
+        Recipe recipe = new Recipe();
+        ingredient.setRecipe(recipe);
+
+        Assert.assertEquals(recipe, ingredient.getRecipe());
+    }
 }

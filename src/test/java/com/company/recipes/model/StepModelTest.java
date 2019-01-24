@@ -23,4 +23,12 @@ public class StepModelTest {
         step.setError("Error 1");
         Assert.assertEquals("Error 1", step.getError());
     }
+
+    @Test
+    public void setRecipe_ShouldReturnRecipeForStep(){
+        Recipe recipe = new Recipe();
+        step.setRecipe(recipe);
+
+        Assert.assertEquals(recipe, step.getRecipe());
+    }
 }

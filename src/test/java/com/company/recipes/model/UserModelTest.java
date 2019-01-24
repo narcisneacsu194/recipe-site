@@ -72,4 +72,13 @@ public class UserModelTest {
         Assert.assertTrue(user.isCredentialsNonExpired());
     }
 
+    @Test
+    public void setRole_shouldSetRoleForUser(){
+        User user = new User();
+        Role role = new Role();
+        user.setRole(role);
+
+        Assert.assertEquals(role, user.getRole());
+    }
+
 }
