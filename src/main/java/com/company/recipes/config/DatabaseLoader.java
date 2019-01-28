@@ -39,19 +39,19 @@ public class DatabaseLoader implements ApplicationRunner{
         userDao.save(user);
         userDao.save(user2);
 
-        Recipe recipe = new Recipe("Keto Jalapeño Popper Chicken",
-                "This Keto Jalapeño Popper Chicken is extraordinarily delicious, super simple, and only made with 5 ingredients.",
+        Recipe recipe = new Recipe("Keto Jalapeno Popper Chicken",
+                "This Keto Jalapeno Popper Chicken is extraordinarily delicious, super simple, and only made with 5 ingredients.",
                 Category.LUNCH, null, 10, null, 30,
                 "https://static1.squarespace.com/static/592439cc9f7456571bfce32a/592456c49de4bb0ca603b9b2/5a96c703ec212d0e8ea8a40d/1537451143536/Keto+Jalapeno+Popper+Chicken_-5.jpg?format=1500w");
         user.addOwnedRecipe(recipe);
         recipe.setUser(user);
         Ingredient ingredient = new Ingredient("4 (4oz) chicken breasts");
-        Ingredient ingredient2 = new Ingredient("2 jalapeños");
+        Ingredient ingredient2 = new Ingredient("2 jalapenos");
         Ingredient ingredient3 = new Ingredient("4 oz cream cheese");
         Ingredient ingredient4 = new Ingredient("4 oz cheddar cheese");
         Ingredient ingredient5 = new Ingredient("8 strips bacon");
         Step step = new Step("Flatten chicken out to 1/2 inch thickness. Preheat oven to 375° F.");
-        Step step2 = new Step("Divide jalapeño and cheese equally between each chicken breast and roll the chicken tightly around filling.");
+        Step step2 = new Step("Divide jalapeno and cheese equally between each chicken breast and roll the chicken tightly around filling.");
         Step step3 = new Step("Wrap each chicken breast with 2 slices of bacon and place in skillet or oven safe baking dish.");
         Step step4 = new Step("Bake for 30 minutes or until bacon is crispy on the outside and chicken is cooked through.");
         recipe.addIngredient(ingredient);ingredient.setRecipe(recipe);
