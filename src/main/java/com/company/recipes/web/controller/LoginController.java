@@ -73,7 +73,16 @@ public class LoginController {
         user.setRole(roleService.findOne(1L));
         user.setEnabled(true);
 
-        userService.save(user);
+        try {
+            userService.save(user);
+        }catch(Exception e){
+            redirectAttributes.addFlashAttribute("user", user);
+            redirectAttributes.addFlashAttribute("flash",
+                    new FlashMessage(String.format("The username '%s' already exists",
+                            user.getUsername()), FlashMessage.Status.FAILURE));
+            return "redirect:/sign-up";
+        }
+
         redirectAttributes.addFlashAttribute("flash",
                 new FlashMessage("The user has been successfully registered!", FlashMessage.Status.SUCCESS));
         return "redirect:/login";
