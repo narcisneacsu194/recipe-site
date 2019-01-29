@@ -29,12 +29,12 @@ public class User implements UserDetails{
     private String username;
 
     @NotNull
-    @Column(length = 100)
+    @Size(max = 100)
     @JsonIgnore
     private String password;
 
     @NotNull
-    @Column(length = 100)
+    @Size(max = 100)
     @JsonIgnore
     private String matchingPassword;
 
