@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,5 +42,28 @@ public class StepServiceTest {
         when(dao.findOne(1L)).thenReturn(new Step("New Step 1"));
         assertThat(service.findOne(1L), instanceOf(Step.class));
         verify(dao, times(1)).findOne(anyLong());
+    }
+
+    @Test
+    public void saveOneStep_ShouldCallDaoSaveMethodOnce(){
+        Step step = new Step("Step 1");
+        service.save(step);
+        verify(dao, times(1)).save(step);
+    }
+
+    @Test
+    public void saveStepList_ShouldCallDaoSaveMethodOnce(){
+        List<Step> steps = new ArrayList<>();
+        Step step = new Step("Step 1");
+        steps.add(step);
+        service.save(steps);
+        verify(dao, times(1)).save(steps);
+    }
+
+    @Test
+    public void delete_ShouldCallDaoDeleteMethodOnce(){
+        Step step = new Step("Step 1");
+        service.delete(step);
+        verify(dao, times(1)).delete(step);
     }
 }
