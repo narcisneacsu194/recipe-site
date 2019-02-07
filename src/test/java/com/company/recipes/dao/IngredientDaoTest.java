@@ -34,12 +34,12 @@ public class IngredientDaoTest {
 
     @Test
     public void findAll_ShouldReturn30Ingredients(){
-        Assert.assertThat(ingredientDao.findAll(), hasSize(30));
+        Assert.assertThat(ingredientDao.findAll(), hasSize(64));
     }
 
     @Test
     public void findOne_ShouldReturnNull(){
-        Assert.assertThat(ingredientDao.findOne(31L), nullValue(Ingredient.class));
+        Assert.assertThat(ingredientDao.findOne(65L), nullValue(Ingredient.class));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class IngredientDaoTest {
 
         ingredientDao.save(ingredients);
 
-        Assert.assertThat(ingredientDao.findAll(), hasSize(33));
+        Assert.assertThat(ingredientDao.findAll(), hasSize(67));
     }
 
     @Test

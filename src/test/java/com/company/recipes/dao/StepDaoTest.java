@@ -33,7 +33,7 @@ public class StepDaoTest {
 
     @Test
     public void findAll_ShouldReturn30Steps(){
-        Assert.assertThat(dao.findAll(), hasSize(30));
+        Assert.assertThat(dao.findAll(), hasSize(25));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class StepDaoTest {
 
         dao.save(steps);
 
-        Assert.assertThat(dao.findAll(), hasSize(33));
+        Assert.assertThat(dao.findAll(), hasSize(28));
     }
 
     @Test
