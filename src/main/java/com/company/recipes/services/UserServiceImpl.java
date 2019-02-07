@@ -1,6 +1,5 @@
 package com.company.recipes.services;
 
-import com.company.recipes.dao.RoleDao;
 import com.company.recipes.dao.UserDao;
 import com.company.recipes.model.User;
 import org.hibernate.Hibernate;
@@ -17,9 +16,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private RoleDao roleDao;
 
     @Override
     public User findByUsername(String username) {
