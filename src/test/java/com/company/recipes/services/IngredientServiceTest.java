@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,5 +44,29 @@ public class IngredientServiceTest {
         when(dao.findOne(1L)).thenReturn(new Ingredient("New Ingredient 1"));
         assertThat(service.findOne(1L), instanceOf(Ingredient.class));
         verify(dao, times(1)).findOne(anyLong());
+    }
+
+    @Test
+    public void saveOneIngredient_ShouldCallDaoSaveMethodOnce(){
+        Ingredient ingredient = new Ingredient("Ingredient 1");
+        service.save(ingredient);
+        verify(dao, times(1)).save(ingredient);
+    }
+
+    @Test
+    public void saveIngredientList_ShouldCallDaoSaveMethodOnce(){
+        List<Ingredient> ingredients = new ArrayList<>();
+        Ingredient ingredient1 = new Ingredient("ingredient1");
+        Ingredient ingredient2 = new Ingredient("ingredient2");
+        ingredients.add(ingredient1);ingredients.add(ingredient2);
+        service.save(ingredients);
+        verify(dao, times(1)).save(ingredients);
+    }
+
+    @Test
+    public void delete_ShouldCallDaoDeleteMethodOnce(){
+        Ingredient ingredient = new Ingredient("Ingredient 1");
+        service.delete(ingredient);
+        verify(dao, times(1)).delete(ingredient);
     }
 }
