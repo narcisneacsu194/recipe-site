@@ -49,15 +49,13 @@ public class RecipeControllerTest{
     private UserService userService;
 
 
-    private RecipeController recipeController;
-
     private MockMvc mockMvc;
 
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
 
-        recipeController = new RecipeController(recipeService,
+        RecipeController recipeController = new RecipeController(recipeService,
                 ingredientService, stepService, userService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();

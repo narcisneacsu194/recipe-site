@@ -35,7 +35,7 @@
 
             <div class="clear"></div>
 
-            <div class="grid-100 row addHover" th:each="recipe : ${favoredRecipes}" th:fragment="recipe-list">
+            <div class="grid-100 row addHover" th:each="recipe : ${favoredRecipes}">
                 <a th:href="@{|/recipes/${recipe.id}/detail|}">
                     <div class="grid-70">
                         <p>
