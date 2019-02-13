@@ -1,6 +1,7 @@
 package com.company.recipes.web.controller;
 
 import com.company.recipes.enums.Category;
+import com.company.recipes.exceptions.NotFoundException;
 import com.company.recipes.model.Ingredient;
 import com.company.recipes.model.Recipe;
 import com.company.recipes.model.Step;
@@ -101,6 +102,11 @@ public class RecipeController {
     @RequestMapping(value = "/recipes/{recipeId}/detail")
     public String recipeDetails(@PathVariable Long recipeId, Model model, @AuthenticationPrincipal User user){
         Recipe recipe = recipeService.findOne(recipeId);
+
+        if(recipe == null){
+            throw new NotFoundException("Recipe Not Found. For ID value: " + recipeId.toString());
+        }
+
         User actualUser = userService.findByUsername(user.getUsername());
 
         if(!recipe.getFavoriteUsers().contains(actualUser)){
