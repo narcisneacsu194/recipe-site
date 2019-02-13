@@ -118,7 +118,11 @@ public class User implements UserDetails{
     }
 
     public void removeFavoritedRecipe(Recipe recipe){
-        favoritedRecipes.remove(recipe);
+        try {
+            favoritedRecipes.remove(recipe);
+        }catch(UnsupportedOperationException e){
+
+        }
     }
 
     public List<Recipe> getOwnedRecipes() {

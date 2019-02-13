@@ -12,7 +12,7 @@ import com.company.recipes.services.UserService;
 import com.company.recipes.utilities.UtilityMethods;
 import com.company.recipes.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.net.URL;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -46,9 +45,8 @@ public class RecipeController {
     }
 
     @RequestMapping(value = {"/", "/recipes"})
-    public String listRecipes(Model model, Principal principal){
+    public String listRecipes(Model model, @AuthenticationPrincipal User user){
         List<Recipe> recipes;
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
         if(!model.containsAttribute("recipes")){
             recipes = recipeService.findAll();
@@ -63,7 +61,7 @@ public class RecipeController {
         }
 
         model.addAttribute("categories", Category.values());
-        model.addAttribute("username", user.getUsername());
+        model.addAttribute("username", actualUser.getUsername());
         return "recipe/index";
     }
 
@@ -73,14 +71,14 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredients", recipe.getIngredients());
         model.addAttribute("steps", recipe.getSteps());
-        Model categories = model.addAttribute("categories", Category.values());
+        model.addAttribute("categories", Category.values());
         model.addAttribute("action", "recipes/edit-recipe");
         return "recipe/edit";
     }
 
     @RequestMapping(value = "/recipes/edit-recipe", method = RequestMethod.POST)
     public String editRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes,
-                             Principal principal){
+                             @AuthenticationPrincipal User user){
         String response = validateFormValues(recipe, redirectAttributes, result,
                 String.format("redirect:/recipes/%s/edit", recipe.getId()));
 
@@ -88,7 +86,6 @@ public class RecipeController {
 
         setUserForIngredientsAndSteps(recipe);
 
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User userFromDatabase = userService.findByUsername(user.getUsername());
         Recipe recipeFromDatabase = recipeService.findOne(recipe.getId());
 
@@ -102,9 +99,8 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipes/{recipeId}/detail")
-    public String recipeDetails(@PathVariable Long recipeId, Model model, Principal principal){
+    public String recipeDetails(@PathVariable Long recipeId, Model model, @AuthenticationPrincipal User user){
         Recipe recipe = recipeService.findOne(recipeId);
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
 
         if(!recipe.getFavoriteUsers().contains(actualUser)){
@@ -130,13 +126,12 @@ public class RecipeController {
 
     @RequestMapping(value = "/recipes/add-recipe", method = RequestMethod.POST)
     public String addRecipe(@Valid Recipe recipe, BindingResult result, RedirectAttributes redirectAttributes,
-                            Principal principal){
+                            @AuthenticationPrincipal User user){
 
        String response = validateFormValues(recipe, redirectAttributes, result,
                "redirect:/recipes/add");
        if(!response.isEmpty())return response;
 
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         recipe.setUser(user);
 
         try {
@@ -166,21 +161,26 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/search-by-description-containing", method = RequestMethod.GET)
-    public String searchByDescriptionContaining(Recipe recipe, RedirectAttributes redirectAttributes, Principal principal){
-        List<Recipe> recipes = recipeService.findByDescriptionContaining(recipe.getDescription().trim());
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
-        User actualUser = userService.findByUsername(user.getUsername());
-        redirectAttributes.addFlashAttribute("recipes", recipes);
-        redirectAttributes.addFlashAttribute("nullAndNonNullUserFavoriteRecipeList",
-                UtilityMethods.nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
-        redirectAttributes.addFlashAttribute("description", recipe.getDescription());
+    public String searchByDescriptionContaining(Recipe recipe, RedirectAttributes redirectAttributes,
+                                                @AuthenticationPrincipal User user){
+        String recipeDescription = recipe.getDescription();
+        if(recipeDescription != null){
+            recipeDescription = recipeDescription.trim();
+            List<Recipe> recipes = recipeService.findByDescriptionContaining(recipeDescription);
+            User actualUser = userService.findByUsername(user.getUsername());
+            redirectAttributes.addFlashAttribute("recipes", recipes);
+            redirectAttributes.addFlashAttribute("nullAndNonNullUserFavoriteRecipeList",
+                    UtilityMethods.nullAndNonNullUserFavoriteRecipeList(recipes, actualUser.getFavoritedRecipes()));
+            redirectAttributes.addFlashAttribute("description", recipe.getDescription());
+        }
+
         return "redirect:/";
     }
 
     @RequestMapping(value = "/search-by-category", method = RequestMethod.GET)
-    public String searchByCategory(Recipe recipe, RedirectAttributes redirectAttributes, Principal principal){
+    public String searchByCategory(Recipe recipe, RedirectAttributes redirectAttributes,
+                                   @AuthenticationPrincipal User user){
         List<Recipe> recipes;
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         User actualUser = userService.findByUsername(user.getUsername());
         if(recipe.getCategory() != null){
             recipes = recipeService.findByCategory(recipe.getCategory().getName());
@@ -197,8 +197,8 @@ public class RecipeController {
     }
 
     @RequestMapping(value = "/recipes/{recipeId}/detail/add-to-favorites", method = RequestMethod.POST)
-    public String addToFavories(@PathVariable Long recipeId, RedirectAttributes redirectAttributes, Principal principal){
-        User user = (User)((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+    public String addToFavories(@PathVariable Long recipeId, RedirectAttributes redirectAttributes,
+                                @AuthenticationPrincipal User user){
         User user2 = userService.findByUsername(user.getUsername());
         Recipe recipe = recipeService.findOne(recipeId);
 
@@ -211,7 +211,7 @@ public class RecipeController {
             userService.save(user2);
         }
 
-        return String.format("redirect:/recipes/%s/detail", recipe.getId());
+        return String.format("redirect:/recipes/%s/detail", recipeId);
     }
 
     private Boolean isValidUrl(String url){
